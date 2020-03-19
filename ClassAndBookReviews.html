@@ -601,6 +601,21 @@ Originally, I was so motivated that I’d finish this 3-month, 8 project course 
 							<p>
 							I would give myself a B in this class. I’ve done all the work and feel confident in the material, but my VM translator and Jack to VM compiler don’t have the cleanest code. While they are bug-free so far, I want to redo these assignments to both understand the material better, and to become better at software design in general, but it’s time consuming, so I haven’t done that yet. If I had to extend one of these to include another feature, it would be a mess, and I’d probably resort to rewriting the program.
 							</p>
+							<p>
+							Edit: I started to try to finish the course. All that was left was wrapping up the compiler and the OS chapter. Last time I worked on the compiler was two months ago. I started to relearn my code base, and think I could fairly easily add non-breaking features to finish it. The main problem I ran into was that I don't remember the jack language that well. The specific problem was in this: 
+							</p><p>
+							let length = Keyboard.readInt("How many numbers? ");. 
+							</p><p>
+							I wasn't sure how to handle the string expression. I could generate jack code to compile that would look something like:
+							</p><p>
+							let x = String.new(How many numbers?)
+							<br>
+							let length = Keyboard.readInt(x);
+							</p><p>
+							which I believe my current compiler could handle, but that's a messy solution, and could easily cause other things to break and get messy. I don't remember if there's a more standard way to solve this in the VM language, because I need to push the string "How many numbers? " onto the stack before calling 'Keyboard.readInt 1', but I don't remember how to push a string, and I really didn't spend much time trying to relearn the jack or VM specs. The second problem was that I was having trouble loading directories into the VM emulator, so I couldn't test programs that spanned more than one class. I might have been doing something wrong / forgot how to do it, or something is wrong with the VM emulator program. I'm a little bummed that I'm giving up / ran into hurdles right now, because I was excited to finish and possibly refactor my compiler. It's probably the biggest project I've done, and would give me good experience with edit old code, abstracting patterns, and refactoring. I also want my biggest project that I've worked hard on to be a finished project that I can show off (or at least be proud of). 
+							</p><p>
+							I started reading the OS chapter, but decided not to finish. While I think I'd learn some things, it all seemed too tedious right now, and maybe someday I'll revisit this (but unlikely if I'm being real). I think my time is better spent elsewhere right now, like getting deeper into Haskell, Agda, my AI class, or some larger software development experience. I'd also like to take the OS class eventually, and I'm sure that will overshadow anything I'd learn in this chapter. 
+
 
 							<hr>
 							<a name="Abstract Algebra"></a>
