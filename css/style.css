@@ -21,6 +21,10 @@ ul {
     padding: 0;
 }
 
-
-
-
+nav a {
+    line-height: 1em;
+    display: inline-block;
+    text-decoration: none;
+    padding: 12px;
+    margin: 4px;
+}

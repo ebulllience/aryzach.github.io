@@ -1,36 +1,15 @@
-<!doctype html>
+---
+layout: default
+title: Blog
+---
+<h1>Posts</h1>
 
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width-=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Blog</title>
-  <link rel="stylesheet" href="styles.css">
-
-</head>
-<body>
-    <header>
-        <h1>Zach Blog</h1>
-    </header>
-    <div>
-        <ul>
-            <li>
-                <a href="Resume.pdf"> resume </a>
-            </li>
-            <li>
-                <a href="mailto:zach_asmith@yahoo.com"> email </a>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <a href=posts/smartIrrigation.markdown> Smart Irrigation </a></div>
-           </li>
-            <li>
-                <a href=posts/ClassAndBookReviews.html> CS class and book reviews </a></div>
-           </li>
-        </ul>
-    </div>
-</body>
-</html>
-
+<ul>
+    <div>.</div>
+    {% for post in site.posts %}
+    <li>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+        <div>.</div>
+    </li>
+    {% endfor %}
+</ul>
