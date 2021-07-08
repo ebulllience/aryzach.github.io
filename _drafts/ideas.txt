@@ -1,5 +1,26 @@
 React site / build vs buy
         taking time to research if you think somebody has solved this problem before
+
 blog about new job daily
         use voice to record and process into text 
         both about scala and about being a new dev
+
+fix class and book reviews
+
+edit existing posts for better layout, include pictures and links
+
+put up snake game
+
+ideas for RC follow boat
+        GPS w bluetooth
+        computer vision. Probably not need much data bc it's a fairly static scene. Main issues would be light and waves. Would lidar be better for this? Or camera? Fun way to learn computer vision, also possibly applicable to self driving boat to recognize swimmers
+
+Journey to ZIO
+        I knew some FP from haskell
+        [Most of this book](https://books.underscore.io/essential-scala/essential-scala.html#getting-started)
+        Build sloppy, unfinished hangman to get used to language
+        [Followed this](https://scalac.io/blog/introduction-to-programming-with-zio-functional-effects/)
+        without deep understanding just to understand the structure and though process
+        redo this and try to build it myself. Basically building muscle memory
+        Create other games with this lib
+        More like an ecosystem than a tooling library
