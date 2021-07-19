@@ -26,6 +26,8 @@ ul {
 ul.home {
     list-style-type: none;
     text-align: center;
+    padding: 0;
+    margin: auto;
 }
 
 nav a {

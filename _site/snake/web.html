@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Snake</title>
-    <script>require=()=>({}); module={}; module.exports=()=>({})</script>
-  </head>
-  <body>
-    <canvas id="gameCanvas" width="550" height="550"></canvas>
-    <script src="snake.js"></script>
-    <script src="web.js"></script>
-  </body>
+    <head>
+        <meta charset="utf-8">
+        <title>Snake</title>
+        <script>require=()=>({}); module={}; module.exports=()=>({})</script>
+        <style>
+body {
+}
+ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+    list-style-type: none;
+}
+        </style>
+    </head>
+    <body>
+        <ul>
+            <li>
+                <canvas id="gameCanvas" width="550" height="550"></canvas>
+            </li>
+            <li>
+                <div>Arrow Keys and WASD</div>
+                <div>You can eat each other and there's no winner</div>
+                <div>Written in functional-style JS</div>
+            </li>
+        </ul>
+        <script src="snake.js"></script>
+        <script src="web.js"></script>
+    </body>
 </html>
