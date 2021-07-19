@@ -7,41 +7,62 @@ const LEFT  = { x:-1 , y: 0 };
 const UP    = { x: 0 , y:-1 };
 const DOWN  = { x: 0 , y: 1 };
 
+const initialSnakeA = {direction: RIGHT, parts: [{x: 4, y: 4},{x:3,y:4}]}
+const initialSnakeB = {direction: LEFT,  parts: [{x: 2, y: 2},{x:1,y:2}]}
+
     
 const initialState = () => ({
-    snake: [{x: 3, y: 3},{x:2,y:3}],
-    direction: RIGHT,
+    snakes: [initialSnakeA, initialSnakeB], 
     food: { x: 3, y: 4},
-    columns: 20,
-    rows: 20 
+    columns: 40,
+    rows: 40 
 })
 
 let state = initialState(); 
 
 
-const getX = c => Math.round(c * (canvas.width / state.columns)) 
-const getY = r => Math.round(r * (canvas.width / state.rows   ))
+const getX = c => Math.round(c * (canvas.height / state.columns)) 
+const getY = r => Math.round(r * (canvas.height/ state.rows))
 
+// state => [snake]
+const moveSnakes = st => st.snakes.map(s => moveSnake(s)(st.rows)(st.columns)(st.food));
 
-const moveSnake = st => {
-    const snk = [...(st.snake)];
-    const head = snk[0];
-    const direction = st.direction;
-    if (!isEating(st)) {
-        console.log('pop');
-        console.log(st);
-        snk.pop();
-    } else {
-        console.log(' no pop');
-        console.log(st);
-    }
-    var p;
-    p = addPts(head)(direction); 
-    snk.unshift(p);
-    return snk; 
+// snake => snake
+const moveSnake = snk => r => c => food => {
+    const parts = snk.parts
+    const head = parts[0];
+    console.log(head,food);
+    const direction = snk.direction;
+    if (!isEating(parts)(food)) {
+        parts.pop();
+    }; 
+    var p = addPts(head)(direction); 
+    parts.unshift(p);
+    return {direction : snk.direction, parts : wrapSnake(parts)(r)(c)}; 
 }
 
-const changeDirection = st => direction => {
+// parts, r, c => parts 
+const wrapSnake = snk => r => c => {
+    return snk.map(p => wrapPoint(p)(r)(c));
+}
+
+// point, row, col => point
+const wrapPoint = p => r => c => {
+    return {x: adjCoord(p.x)(r), y: adjCoord(p.y)(c)};
+}
+        
+
+const adjCoord = coord => max => {
+    if (coord >= max) {
+        return 0;
+    } else if (coord < 0) {
+        return max;
+    } else {
+        return coord;
+    }
+}
+
+const changeDirection = st => direction => num => {
     let curDir = st.direction;
     let newDir = st.direction;
     if (direction == LEFT && curDir != RIGHT) {
@@ -56,25 +77,15 @@ const changeDirection = st => direction => {
     if (direction == UP && curDir != DOWN) {
         newDir = UP;
     };
-    st.direction = newDir;
+    st.snakes[num].direction = newDir;
     return st;
 }
 
 const addPts = p1 => p2 => ({x: p1.x + p2.x, y: p1.y + p2.y})
 const ptsEq  = p1 => p2 => ((p1.x == p2.x) && (p1.y == p2.y))
 
-const isEating2 = st => {
-    const h = st.snake[0];
-    const d = st.direction;
-    const f = st.food;
-    //console.log(h,d,f);
-    const v = ptsEq(addPts(h)(d))(f);
-    //console.log(v);
-    return v;
-}
 
-const isEating = st => ptsEq(st.snake[0])(st.food)
-const isEating1 = st => ptsEq(st.snake[1])(st.food)
+const isEating = parts => food => ptsEq(parts[0])(food)
 
 const randFood = st => {
     const food = ({ x: (Math.floor(Math.random() * st.rows)), y: (Math.floor(Math.random() * st.columns)) });
@@ -83,9 +94,9 @@ const randFood = st => {
 
 const next = st => {
     const f = applyObj({
-        snake: moveSnake, 
-        direction: propertyId('direction'),
-        //food: propertyId('food'),
+        snakes: moveSnakes, 
+        //direction: propertyId('direction'),
+        //directionB: propertyId('direction'),
         food: nextFood, 
         columns: propertyId('columns'),
         rows: propertyId('rows') 
@@ -94,9 +105,7 @@ const next = st => {
 }
 
 const nextFood = st => {
-    if (isEating(st)) { 
-        console.log('rand'); 
-        console.log(st);
+    if (st.snakes.some(s => isEating(s.parts)(st.food))) { 
         return randFood(st);  
     } else {
         return st.food;
