@@ -29,9 +29,8 @@ const moveSnakes = st => st.snakes.map(s => moveSnake(s)(st.rows)(st.columns)(st
 
 // snake => snake
 const moveSnake = snk => r => c => food => {
-    const parts = snk.parts
+    const parts = [...(snk.parts)];
     const head = parts[0];
-    console.log(head,food);
     const direction = snk.direction;
     if (!isEating(parts)(food)) {
         parts.pop();
@@ -63,8 +62,8 @@ const adjCoord = coord => max => {
 }
 
 const changeDirection = st => direction => num => {
-    let curDir = st.direction;
-    let newDir = st.direction;
+    let curDir = st.snakes[num].direction;
+    let newDir = st.snakes[num].direction;
     if (direction == LEFT && curDir != RIGHT) {
         newDir = LEFT;
     };

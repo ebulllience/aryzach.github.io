@@ -26,7 +26,7 @@ const drawScreen = () => {
 
 
 const step = t0 => t1 => {
-    if ((t1 - t0) > 400) {
+    if ((t1 - t0) > 40) {
         state = next(state);
         drawScreen();
         window.requestAnimationFrame(step(t1));
