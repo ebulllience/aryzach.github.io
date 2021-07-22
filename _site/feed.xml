@@ -1,5 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-19T11:56:02-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
-</subtitle><entry><title type="html">Journey to ZIO</title><link href="http://localhost:4000/journey-to-zio" rel="alternate" type="text/html" title="Journey to ZIO" /><published>2021-07-08T11:35:05-04:00</published><updated>2021-07-08T11:35:05-04:00</updated><id>http://localhost:4000/journey-to-zio</id><content type="html" xml:base="http://localhost:4000/journey-to-zio">&lt;p&gt;I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m getting there.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-22T18:25:08-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
+</subtitle><entry><title type="html">Tetris with Cats</title><link href="http://localhost:4000/2021/07/22/tetris-with-cats.html" rel="alternate" type="text/html" title="Tetris with Cats" /><published>2021-07-22T10:53:29-04:00</published><updated>2021-07-22T10:53:29-04:00</updated><id>http://localhost:4000/2021/07/22/tetris-with-cats</id><content type="html" xml:base="http://localhost:4000/2021/07/22/tetris-with-cats.html">&lt;ul&gt;
+  &lt;li&gt;change scala version in build.sbt&lt;/li&gt;
+  &lt;li&gt;still wasn’t running, debugged RectRegion, so now only one type of block shows&lt;/li&gt;
+  &lt;li&gt;few other small bugs to get it running&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I’ll start by just trying to get all piece shapes back in the game. When debugging, I cound this fragment:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val allPossiblePieces: Seq[RectRegion] = { 
+// is this a monoid?
+def multF[A](f: A =&amp;gt; A)(times: Int): A =&amp;gt; A = 
+  (1 to times).foldLeft(identity[A](_))((c, _) =&amp;gt; c andThen f)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The comment “is this a monoid?” tells me I’m in a good place, because it shows me the original writer understands these concepts just a little better than I do, so hopefully this excersise will push me to their level.&lt;/p&gt;</content><author><name></name></author><summary type="html">change scala version in build.sbt still wasn’t running, debugged RectRegion, so now only one type of block shows few other small bugs to get it running</summary></entry><entry><title type="html">Journey to ZIO</title><link href="http://localhost:4000/journey-to-zio" rel="alternate" type="text/html" title="Journey to ZIO" /><published>2021-07-08T11:35:05-04:00</published><updated>2021-07-08T11:35:05-04:00</updated><id>http://localhost:4000/journey-to-zio</id><content type="html" xml:base="http://localhost:4000/journey-to-zio">&lt;p&gt;I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m getting there.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -13,6 +27,8 @@
   &lt;li&gt;I’m getting side tracked and started watching and following along with the series &lt;a href=&quot;https://www.youtube.com/watch?v=XwMKw03w8bs&amp;amp;list=PLJGDHERh23x-ammk-n2XuZWhoRVB-wAF&quot;&gt;ZIO from DevInsideYou&lt;/a&gt; which I’m finding insightful and demystifying, but lost at the covarience / contravarience discussion.&lt;/li&gt;
   &lt;li&gt;Started building a Tic Tac Toe game, but stopped when I felt I wasn’t learning much more.&lt;/li&gt;
   &lt;li&gt;FP to the Min&lt;/li&gt;
+  &lt;li&gt;Finished Tic Tac Toe and extended it to have an optional bot. I ran into an issue when trying to generalize a function which I think has to do with polymorphic methods. For now, I’m moving on, but I’d still like to clean this up, and make a smarter bot. Here’s the &lt;a href=&quot;https://github.com/aryzach/scala-ZIO-ticTacToe&quot;&gt;repo&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;I found a tetris game written with Cats. I’ve had a hard time finding ZIO games that use streams, so I’m especially excited about this because it’ll help me learn about working with streams in general, with the bonus of learning some Cats. Maybe I’ll try to port the app to use ZIO instead of Cats. I’ve also never had to deal with drawing to the console. The drawing approach in this repo seems like it’s less mature than something like ncurses in Python, so I’m hoping to learn something about that, too. Hacking this project will also hopefully help me understand larger pure FP scala code bases and learn about structuring larger pure FP scala projects in general! This is a bigger project, so I’ll track it (here).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&quot;todo&quot;&gt;Todo:&lt;/h4&gt;
@@ -21,6 +37,13 @@
   &lt;li&gt;Create other games with ZIO&lt;/li&gt;
   &lt;li&gt;Create small real world ZIO app, ideally something that needs concurrency / async&lt;/li&gt;
   &lt;li&gt;Create online multiplayer CLI game using Play framework and ZIO&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Great resources / people to follow:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;ZIO benevolent dictator for life? &lt;a href=&quot;https://degoes.net/&quot;&gt;John De Goes&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://scalac.io/zio/&quot;&gt;Scalac / ZIO&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;General scala: &lt;a href=&quot;https://alvinalexander.com/&quot;&gt;Alvin Alexander&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;ZIO is more like an ecosystem than a tooling library, similar to React (middle ground between a framework and a library)&lt;/p&gt;</content><author><name></name></author><summary type="html">I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m getting there.</summary></entry><entry><title type="html">React useState() and the state monad in Haskell</title><link href="http://localhost:4000/react-useState-state-monad-Haskell" rel="alternate" type="text/html" title="React useState() and the state monad in Haskell" /><published>2021-05-27T00:00:00-04:00</published><updated>2021-05-27T00:00:00-04:00</updated><id>http://localhost:4000/react-and-state-monad</id><content type="html" xml:base="http://localhost:4000/react-useState-state-monad-Haskell">&lt;h3 id=&quot;why-ive-come-across-this&quot;&gt;Why I’ve come across this&lt;/h3&gt;

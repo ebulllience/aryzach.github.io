@@ -14,14 +14,17 @@ const drawPart = color => part => {
     ctx.fillRect(getX(part.x), getY(part.y), getX(1), getX(1));
 }
 
-const drawSnake = parts => {
-    parts.forEach(drawPart('black'));
+const drawSnake = parts => color => {
+    parts.forEach(drawPart(color));
 }
 
 const drawScreen = () => {
     clearCanvas();
     drawPart('red')(state.food);
-    state.snakes.forEach(s => drawSnake(s.parts));
+    const snakeA = state.snakes[0].parts;
+    const snakeB = state.snakes[1].parts;
+    drawSnake(snakeA)('black');
+    drawSnake(snakeB)('green');
 }
 
 

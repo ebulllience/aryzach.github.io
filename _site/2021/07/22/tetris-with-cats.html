@@ -1,0 +1,15 @@
+<ul>
+  <li>change scala version in build.sbt</li>
+  <li>still wasn’t running, debugged RectRegion, so now only one type of block shows</li>
+  <li>few other small bugs to get it running</li>
+</ul>
+
+<p>I’ll start by just trying to get all piece shapes back in the game. When debugging, I cound this fragment:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val allPossiblePieces: Seq[RectRegion] = { 
+// is this a monoid?
+def multF[A](f: A =&gt; A)(times: Int): A =&gt; A = 
+  (1 to times).foldLeft(identity[A](_))((c, _) =&gt; c andThen f)
+</code></pre></div></div>
+
+<p>The comment “is this a monoid?” tells me I’m in a good place, because it shows me the original writer understands these concepts just a little better than I do, so hopefully this excersise will push me to their level.</p>

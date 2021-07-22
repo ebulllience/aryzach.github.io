@@ -24,3 +24,8 @@ Journey to ZIO
         redo this and try to build it myself. Basically building muscle memory
         Create other games with this lib
         More like an ecosystem than a tooling library
+
+RC boat follow swimmer
+        current option is just small buoy
+        GPS vs vision
+        lidar not good option

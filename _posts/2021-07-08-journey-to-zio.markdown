@@ -18,6 +18,8 @@ I have a job lined up working in Scala and will make heavy use of ZIO. This is a
  - I'm getting side tracked and started watching and following along with the series [ZIO from DevInsideYou](https://www.youtube.com/watch?v=XwMKw03w8bs&list=PLJGDHERh23x-ammk-n2XuZWhoRVB-wAF) which I'm finding insightful and demystifying, but lost at the covarience / contravarience discussion.
  - Started building a Tic Tac Toe game, but stopped when I felt I wasn't learning much more. 
  - FP to the Min
+ - Finished Tic Tac Toe and extended it to have an optional bot. I ran into an issue when trying to generalize a function which I think has to do with polymorphic methods. For now, I'm moving on, but I'd still like to clean this up, and make a smarter bot. Here's the [repo](https://github.com/aryzach/scala-ZIO-ticTacToe)
+ - I found a tetris game written with Cats. I've had a hard time finding ZIO games that use streams, so I'm especially excited about this because it'll help me learn about working with streams in general, with the bonus of learning some Cats. Maybe I'll try to port the app to use ZIO instead of Cats. I've also never had to deal with drawing to the console. The drawing approach in this repo seems like it's less mature than something like ncurses in Python, so I'm hoping to learn something about that, too. Hacking this project will also hopefully help me understand larger pure FP scala code bases and learn about structuring larger pure FP scala projects in general! This is a bigger project, so I'll track it (here).
 
 
 
@@ -26,5 +28,10 @@ I have a job lined up working in Scala and will make heavy use of ZIO. This is a
  - Create other games with ZIO
  - Create small real world ZIO app, ideally something that needs concurrency / async
  - Create online multiplayer CLI game using Play framework and ZIO
+
+Great resources / people to follow:
+ - ZIO benevolent dictator for life? [John De Goes](https://degoes.net/)
+ - [Scalac / ZIO](https://scalac.io/zio/)
+ - General scala: [Alvin Alexander](https://alvinalexander.com/)
 
 ZIO is more like an ecosystem than a tooling library, similar to React (middle ground between a framework and a library)
