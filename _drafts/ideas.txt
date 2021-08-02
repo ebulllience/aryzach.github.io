@@ -9,8 +9,6 @@ fix class and book reviews
 
 edit existing posts for better layout, include pictures and links
 
-put up snake game
-
 ideas for RC follow boat
         GPS w bluetooth
         computer vision. Probably not need much data bc it's a fairly static scene. Main issues would be light and waves. Would lidar be better for this? Or camera? Fun way to learn computer vision, also possibly applicable to self driving boat to recognize swimmers
@@ -29,3 +27,5 @@ RC boat follow swimmer
         current option is just small buoy
         GPS vs vision
         lidar not good option
+
+idea: slip cover for kindle to signal what book you're reading. Could be paired w/ kindle purchase and sent to you for an extra dollar or two. Some people like to keep books on shelves as either decor or as little trophies, this could replace that.

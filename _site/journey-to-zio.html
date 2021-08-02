@@ -16,45 +16,46 @@
   <a href="/Resume.pdf" target="_blank">
     Resume
   </a>
+  <a href="https://github.com/aryzach" rel="noreferrer noopener" target="_blank">
+    Github 
+  </a>
 </nav>
 
     <h1>Journey to ZIO</h1>
 <p>08 Jul 2021 </p>
 
-<p>I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m getting there.</p>
+<p>I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m learning Scala and ZIO.</p>
 
-<hr />
-
+<p><br /></p>
 <h4 id="so-far">So far:</h4>
 <ul>
-  <li>I’m comfortable with the basics of FP from Haskell including a theoretical understanding of monads, functors, applicative. I can work with the IO monad, bind operator, ‘do’ syntax. I also understand that list and maybe are also monads. I’d never heavily applied these concepts outside of games.</li>
-  <li>Read and did exercises from <a href="https://books.underscore.io/essential-scala/essential-scala.html#getting-started">most of this book</a></li>
-  <li>Built a sloppy, unfinished hangman to get used to language (link)</li>
-  <li>Followed <a href="https://scalac.io/blog/introduction-to-programming-with-zio-functional-effects/">this tutorial</a>. The first time through without deep understanding just to understand the structure and though process. I then rebuilt it mostly to build muscle memory, get a deeper understanding of the program structure and types</li>
-  <li>Built the game from <a href="https://www.youtube.com/watch?app=desktop&amp;v=sxudIMiOo68">FP to the Max</a> with ZIO before watching how John De Goes does it. Then I followed along as he build App1, which I understood fairly comfortably. In App2 he builds monads from scratch, which, before he said it, I thought I’d seen it before, and I recognized that the TestIO was similar to the state monad. When he started breaking down IO into Console and Random, that looks plainly like the ZIO types. While I was already beyond my comfort level at this point, I really like the idea of getting to this level of understanding of working in FP and types. While I only understand App2 and App3 at a high level, it makes me excited to work towards this level of understanding, and I think I’ll get there much faster if I’m building real world applications with the FP mindset.</li>
+  <li>I’m comfortable with the basics of FP from Haskell including a theoretical understanding of monads, functors, applicative. I can work with the IO monad, bind operator, ‘do’ syntax. I also understand that list and maybe are also monads. I’d never heavily applied these concepts outside of making small CLI apps.</li>
+  <li>Read and did exercises from <a href="https://books.underscore.io/essential-scala/essential-scala.html#getting-started">Essential Scala by Noel Welsh and Dave Gurnell</a></li>
+  <li>Built a sloppy, unfinished hangman to get used to language. <a href="https://github.com/aryzach/scalaPracticeProjects/blob/main/Hangman.scala">Link to file</a></li>
+  <li>Followed <a href="https://scalac.io/blog/introduction-to-programming-with-zio-functional-effects/">this tutorial</a>. The first time through without deep understanding just to understand the structure and thought process. I then rebuilt it mostly to build muscle memory, get a deeper understanding of the program structure and types</li>
+  <li>Built the game from <a href="https://www.youtube.com/watch?app=desktop&amp;v=sxudIMiOo68">FP to the Max</a> with ZIO before watching how John De Goes does it. Then I followed along as he built App1, which I understood fairly comfortably. In App2 he builds monads from scratch, which, before he said it, I thought I’d seen it before (just defining map and flatMap / bind on a data structure), and I recognized that the TestIO was similar to the state monad. When he started breaking down IO into Console and Random, that looks plainly like the ZIO environment types. While I was already beyond my comfort level at this point, I really like the idea of getting to this level of understanding of working in FP and types. While I only understand App2 and App3 at a high level, it makes me excited to work towards this level of understanding, and I think I’ll get there much faster if I’m building real world applications with the FP mindset.</li>
   <li>I’m getting side tracked and started watching and following along with the series <a href="https://www.youtube.com/watch?v=XwMKw03w8bs&amp;list=PLJGDHERh23x-ammk-n2XuZWhoRVB-wAF">ZIO from DevInsideYou</a> which I’m finding insightful and demystifying, but lost at the covarience / contravarience discussion.</li>
-  <li>Started building a Tic Tac Toe game, but stopped when I felt I wasn’t learning much more.</li>
-  <li>FP to the Min</li>
+  <li>Started building a Tic Tac Toe game with ZIO, but stopped when I felt I wasn’t learning much more.</li>
+  <li>Follow <a href="https://www.signifytechnology.com/blog/2021/01/fp-to-the-min-by-john-de-goes-scala-in-the-city-conference">FP to the Min</a></li>
   <li>Finished Tic Tac Toe and extended it to have an optional bot. I ran into an issue when trying to generalize a function which I think has to do with polymorphic methods. For now, I’m moving on, but I’d still like to clean this up, and make a smarter bot. Here’s the <a href="https://github.com/aryzach/scala-ZIO-ticTacToe">repo</a></li>
-  <li>I found a tetris game written with Cats. I’ve had a hard time finding ZIO games that use streams, so I’m especially excited about this because it’ll help me learn about working with streams in general, with the bonus of learning some Cats. Maybe I’ll try to port the app to use ZIO instead of Cats. I’ve also never had to deal with drawing to the console. The drawing approach in this repo seems like it’s less mature than something like ncurses in Python, so I’m hoping to learn something about that, too. Hacking this project will also hopefully help me understand larger pure FP scala code bases and learn about structuring larger pure FP scala projects in general! This is a bigger project, so I’ll track it (here).</li>
+  <li>I found a <a href="https://github.com/lpld/simple-games">tetris game written with Cats</a>. I’ve had a hard time finding ZIO games that use streams, so I’m especially excited about this because it’ll help me learn about working with streams in general, with the bonus of learning some Cats. Maybe I’ll try to port the app to use ZIO instead of Cats. I’ve also never had to deal with drawing to the console. The rendering approach in this repo seems like it’s less mature than something like curses in Python, so I’m hoping to learn something about that, too. Hacking this project will also hopefully help me understand larger pure FP scala code bases and learn about structuring larger pure FP scala projects in general! This is a bigger project, so I’ll track it <a href="https://aryzach.github.io/2021/07/22/tetris-with-cats.html">in this blog post</a>. And here’s my <a href="https://github.com/aryzach/simple-games">fork</a>.</li>
 </ul>
 
 <h4 id="todo">Todo:</h4>
 <ul>
-  <li>FP to the Min</li>
-  <li>Create other games with ZIO</li>
+  <li>finish turning the tetris game into snake and porting it from Cats to ZIO</li>
   <li>Create small real world ZIO app, ideally something that needs concurrency / async</li>
-  <li>Create online multiplayer CLI game using Play framework and ZIO</li>
+  <li>Create online multiplayer CLI game (or browser game? scalaJS?) using Play framework and ZIO</li>
 </ul>
 
-<p>Great resources / people to follow:</p>
+<p>Commonly used resources / people to follow:</p>
 <ul>
   <li>ZIO benevolent dictator for life? <a href="https://degoes.net/">John De Goes</a></li>
   <li><a href="https://scalac.io/zio/">Scalac / ZIO</a></li>
   <li>General scala: <a href="https://alvinalexander.com/">Alvin Alexander</a></li>
 </ul>
 
-<p>ZIO is more like an ecosystem than a tooling library, similar to React (middle ground between a framework and a library)</p>
+<p>ZIO seems more like an ecosystem than a tooling library, similar to React (middle ground between a framework and a library)</p>
 
 
 
