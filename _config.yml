@@ -40,7 +40,7 @@ include: ['_pages']
 
 markdown: kramdown
 highlighter: rouge
-#input: GFM
+#  input: GFM
 
 # kramdown:
 #     input: GFM
