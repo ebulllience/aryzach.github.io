@@ -37,8 +37,17 @@ github_username:  aryzach
 sass:
     sass_dir: _sass
 include: ['_pages']
-kramdown:
+
+markdown: kramdown
+highlighter: rouge
     input: GFM
+
+# kramdown:
+#     input: GFM
+#     syntax_highlighter: coderay
+#     syntax_highlighter_opts:
+#       line_numbers: table
+#       bold_every: 5
 
 # Exclude from processing.
 # The following items will not be processed, by default.

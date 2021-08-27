@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tetris with Cats -> Snake with ZIO</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <nav class="home">
+  <a href="/" >
+    Home
+  </a>
+  <a href="/about.html" >
+    About
+  </a>
+  <a href="/Resume.pdf" target="_blank">
+    Resume
+  </a>
+  <a href="https://github.com/aryzach" rel="noreferrer noopener" target="_blank">
+    Github 
+  </a>
+</nav>
+
+    <h1>Tetris with Cats -> Snake with ZIO</h1>
+<p>22 Jul 2021 </p>
+
+<p>I wanted to learn to work with ZIO because the job I’m hoping to start uses it heavily. Their code base also has some Cats Effect code. My goal here was to port this Cats-based FP Tetris console game to a ZIO-based console game. This is a daily log of the progress, hurdles, and thoughts.</p>
+
+<h3 id="entry-1">Entry 1</h3>
+
+<ul>
+  <li>change scala version in build.sbt</li>
+  <li>still wasn’t running, debugged RectRegion, so now only one type of block shows</li>
+  <li>few other small bugs to get it running</li>
+</ul>
+
+<h3 id="entry-2">Entry 2</h3>
+<p>I’ll start by just trying to get all piece shapes back in the game. When debugging, I cound this fragment:</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">allPossiblePieces</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">RectRegion</span><span class="o">]</span> <span class="k">=</span> 
+	<span class="c1">// is this a monoid?</span>
+  <span class="k">def</span> <span class="nf">multF</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="n">f</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=&gt;</span> <span class="n">A</span><span class="o">)(</span><span class="n">times</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=&gt;</span> <span class="n">A</span> <span class="k">=</span> 
+  	<span class="o">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">times</span><span class="o">).</span><span class="py">foldLeft</span><span class="o">(</span><span class="n">identity</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="k">_</span><span class="o">))((</span><span class="n">c</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">c</span> <span class="n">andThen</span> <span class="n">f</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>The comment “is this a monoid?” tells me I’m in a good place, because it shows me the original writer understands these concepts just a little better than I do, so hopefully this excersise will push me to their level.</p>
+
+<p>(I later scrapped the tetris idea and decided to tear it down further and make the snake game)</p>
+
+<h3 id="entry-3">Entry 3</h3>
+
+<p>Porting a lot of the project was much more straight forward than I thought it’d be. I spent time reading ZIO and Cats docs, and testing out some Cats types / methods to understand how they work. The ZIO discord was invaluable to help with my newbie questions.</p>
+
+<p>In the following, the State[Ansi, Unit] type and traverse method are from Cats libraries. I wanted to convert it to ZIO.</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">printAt</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">s</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">State</span><span class="o">[</span><span class="kt">Ansi</span>, <span class="kt">Unit</span><span class="o">]</span>
+
+<span class="k">def</span> <span class="nf">printLinesAt</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">lines</span><span class="k">:</span> <span class="kt">Vector</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span> <span class="kt">State</span><span class="o">[</span><span class="kt">Ansi</span>, <span class="kt">Unit</span><span class="o">]</span> <span class="k">=</span> 
+	<span class="k">for</span> <span class="o">{</span>
+		<span class="n">x</span> <span class="k">&lt;-</span> <span class="nv">lines</span><span class="o">.</span><span class="py">zipWithIndex</span><span class="o">.</span><span class="py">traverse</span> 
+			<span class="o">{</span> <span class="nf">case</span> <span class="o">(</span><span class="n">line</span><span class="o">,</span> <span class="n">idx</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nf">printAt</span><span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">idx</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">line</span><span class="o">)</span> <span class="o">}</span>
+	<span class="o">}</span> <span class="k">yield</span> <span class="nv">x</span><span class="o">.</span><span class="py">map</span><span class="o">(</span><span class="k">_</span> <span class="k">=&gt;</span> <span class="nc">Unit</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>Which resulted in this (complements to @adamfraser on discord):</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span> <span class="kt">DrawCommand</span> <span class="o">=</span> <span class="nc">State</span><span class="o">[</span><span class="kt">Ansi</span>, <span class="kt">Unit</span><span class="o">]</span>
+
+<span class="k">def</span> <span class="nf">printLinesAt</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">lines</span><span class="k">:</span> <span class="kt">Vector</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span> <span class="kt">State</span><span class="o">[</span><span class="kt">Ansi</span>, <span class="kt">Unit</span><span class="o">]</span> <span class="k">=</span>
+	<span class="k">for</span> <span class="o">{</span>
+		<span class="k">_</span> <span class="k">&lt;-</span> <span class="nv">lines</span><span class="o">.</span><span class="py">zipWithIndex</span><span class="o">.</span><span class="py">forEach</span> 
+			<span class="o">{</span> <span class="nf">case</span> <span class="o">(</span><span class="n">line</span><span class="o">,</span> <span class="n">idx</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nf">printAt</span><span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">idx</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">line</span><span class="o">)</span> <span class="o">}</span>
+	<span class="o">}</span> <span class="nf">yield</span> <span class="o">()</span>
+</code></pre></div></div>
+
+<p>This uses State from zio.prelude.</p>
+
+<p>This code is nearly identical to the original, but I had trouble understanding how the State return type was built up here, and how the result of the ‘lines.zipWithIndex.forEach…..’ computed value was was not thrown away with the underscore and just yielding unit. <a href="https://www.slideshare.net/pjschwarz/state-monad-212839068">This slideshow</a> was super valuable, and the confusion can be simplified by painstakingly desugarring the for comprehension and State flatMap / map definitions. Ultimitaly, map and flatMap are defined in a less immediately intuitive way for State compared to the more familiar List, Option, and Either monads.</p>
+
+<h3 id="entry-4">Entry 4</h3>
+
+<p>After the snake eats food, you need a new food position, ideally a random position. With the software structure from the tetris game, namely the function to compute the next state from the current one, I was having difficulty using ZIO[Random, …, …] like I had in previous ZIO exersize projects. Because I had the infrastructure of streams already baked into the ‘next state’ functionality, I decided that instead of just a timed tick, I’d stream a new random position each tick, and only use the position if the snake ate food.</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Random food</span>
+<span class="k">val</span> <span class="nv">foodStream</span><span class="k">:</span> <span class="kt">ZStream</span><span class="o">[</span><span class="kt">Random</span>, <span class="kt">Nothing</span>, <span class="kt">Food</span><span class="o">]</span> <span class="k">=</span> 
+	<span class="nv">ZStream</span><span class="o">.</span><span class="py">repeatEffect</span> <span class="o">{</span>
+		<span class="k">for</span> <span class="o">{</span>
+			<span class="n">x</span> <span class="k">&lt;-</span> <span class="nf">nextIntBounded</span><span class="o">(</span><span class="n">width</span><span class="o">)</span>
+			<span class="n">y</span> <span class="k">&lt;-</span> <span class="nf">nextIntBounded</span><span class="o">(</span><span class="n">height</span><span class="o">)</span>
+		<span class="o">}</span> <span class="k">yield</span> <span class="nc">Food</span><span class="o">(</span><span class="nc">Position</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">))</span>
+	<span class="o">}</span> 
+
+<span class="c1">// Regular ticks</span>
+<span class="k">val</span> <span class="nv">tick</span><span class="k">:</span> <span class="kt">ZStream</span><span class="o">[</span><span class="kt">Clock</span>, <span class="kt">Nothing</span>, <span class="kt">Unit</span><span class="o">]</span> <span class="k">=</span> 
+	<span class="nv">ZStream</span><span class="o">.</span><span class="py">tick</span><span class="o">(</span><span class="mf">125.</span><span class="n">millis</span><span class="o">)</span>
+<span class="c1">// Timed Food</span>
+<span class="k">val</span> <span class="nv">tickedFood</span><span class="k">:</span> <span class="kt">ZStream</span><span class="o">[</span><span class="kt">Clock</span> <span class="kt">with</span> <span class="kt">Random</span>, <span class="kt">Nothing</span>, <span class="kt">Food</span><span class="o">]</span> <span class="k">=</span> 
+	<span class="nv">tick</span><span class="o">.</span><span class="py">zip</span><span class="o">(</span><span class="n">foodStream</span><span class="o">).</span><span class="py">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="nv">x</span><span class="o">.</span><span class="py">_2</span><span class="o">)</span>
+<span class="c1">// User's interactions</span>
+<span class="k">val</span> <span class="nv">userMoves</span><span class="k">:</span> <span class="kt">ZStream</span><span class="o">[</span><span class="kt">Console</span>, <span class="kt">IOException</span>, <span class="kt">UserAction</span><span class="o">]</span> <span class="k">=</span> 
+	<span class="nv">interactions</span><span class="o">.</span><span class="py">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="nc">UserAction</span><span class="o">(</span><span class="n">x</span><span class="o">))</span>
+<span class="c1">// merge them</span>
+<span class="k">val</span> <span class="nv">allEvents</span><span class="k">:</span> <span class="kt">ZStream</span><span class="o">[</span><span class="kt">Console</span> <span class="kt">with</span> <span class="kt">Clock</span> <span class="kt">with</span> <span class="kt">Random</span>, <span class="kt">IOException</span>, <span class="kt">Event</span><span class="o">]</span> <span class="k">=</span> 
+	<span class="n">tickedFood</span> <span class="n">merge</span> <span class="n">userMoves</span>
+
+<span class="k">val</span> <span class="nv">states</span><span class="k">:</span> <span class="kt">ZStream</span><span class="o">[</span><span class="kt">Console</span> <span class="kt">with</span> <span class="kt">Clock</span> <span class="kt">with</span> <span class="kt">Random</span>, <span class="kt">IOException</span>, <span class="kt">GameState</span><span class="o">]</span> <span class="k">=</span> 
+	<span class="nv">allEvents</span><span class="o">.</span><span class="py">scan</span><span class="o">(</span><span class="n">initialState</span><span class="o">)(</span><span class="n">nextState</span><span class="o">)</span>
+
+<span class="nv">states</span><span class="o">.</span><span class="py">takeWhile</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">direction</span> <span class="o">!=</span> <span class="kc">false</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>I’m not sure if this is more or less efficient than doing an IO random call only when needed (when the snake ate food). I don’t know enough about how streams work. If any stream that can be precomputed precomputes with a lot of values, it might be more efficient than doing ‘random IO’ only when needed. Regardless, it probably doesn’t matter at all for this app, and it prematurely optimizing. But it’s fun to think about!</p>
+
+<p>Now the game is largely feature complete. It’s not a full snake game, because it never ends and you never lose, but it’s all ported to ZIO, which was my main learning goal.</p>
+
+<p>Here is the <a href="https://github.com/aryzach/snake-console-game-scala-ZIO">repository</a>.</p>
+
+
+
+
+
+  </body>
+</html>
+
+
+

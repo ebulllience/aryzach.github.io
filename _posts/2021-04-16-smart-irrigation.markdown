@@ -62,13 +62,13 @@ The firmware is fairly basic and most of it is just gluing parts of [this guide]
 I implemented a different OTA procedure which uses HTTP GET requests to check if there's a firmware update on the server. Then uses the ESPhttpUpdate library to update the firmware. To update, I update the FW_VERSION in the code with the latest version, upload the new compiled code to a specific file on the server, then update the file 'postedVersion.version' to contain the latest version number.
 
 Global:
-```
+```cpp
 HTTPClient httpClient;
 const int FW_VERSION = 2;
 ```
 
 Main loop:
-```
+```cpp
 // get version
 Serial.println("checking for version update");
 httpClient.begin("http://192.168.1.7/postedVersion.version");
@@ -98,7 +98,7 @@ if( newVersion > FW_VERSION ) {
 My favorite feature of the firmware is that all devices can have the same code. They each have a lookup table that consists of all the name : value pairs with their MAC address and human readable name. This design choice is especially valuable because it allows for a simpler communication protocol, and allows all client devices to have the same code. The database stores IoT device info with a compressed human-readable name, and the IoT clients have a dictionary of all MAC addresses matched to human-readable name. When a command is received by a device, the device will look up it's human-readable name, and then act accordingly. This simplifies the firmware updating process because the same code can be pushed to all devices. 
 
 Global:
-``` 
+```cpp 
 char* ID;
 String MAC;
 
@@ -116,7 +116,7 @@ entry entries[] = {
 ```
 
 Setup:
-```
+```cpp
 // set MAC
 MAC = WiFi.macAddress();
 
@@ -131,7 +131,7 @@ Serial.println(ID);
 ```
 
 Main loop MQTT callback function:
-```
+```cpp
 // 'doc' is the deserialized JSON message from the MQTT connection 
 const String command = doc[ID];
 ```
@@ -141,17 +141,17 @@ Here I host a web app built with Flask, run a Redis instance, an MQTT instance a
 
 I'd already started managing a continuously operational server on a Raspberry Pi for a separate project because it had a few daily users. Most reliability issues were solved by running a cron job on boot that started a tmux session and started the necessary programs. Starting the programs in a tmux session allows me to work on the server without interfering with the necessary programs. Here is the bulk of the startup server script: 
 
-```
+```bash
 #bash
+......
 sleep 2 
-source /home/pi/.bashrc
-PATH=/home/pi/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games
 ps aux | grep redis | awk '{print $2}' | head -n 1 | xargs sudo kill -9
 runuser -l pi -c 'redis-server &' 
 sleep 2
 
 # point port 80 to port 5000 
-sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 5000
+sudo iptables -t nat -A PREROUTING 
+	-p tcp --dport 80 -j REDIRECT --to-port 5000
 
 python3 /home/pi/twistedApp/twistedApp.py & 
 python3 /home/pi/zmqServer.py & 

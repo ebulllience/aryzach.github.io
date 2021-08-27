@@ -1,0 +1,17 @@
+---
+title: Experiment Ideas
+date: 2021-08-27T09:27:10-04:00
+---
+
+Blindness: Be blind for a period of time (one day to a week). The original idea started in Chicago where I felt like I was in a safe, but still challenging place for this. I could walk everwhere, lots of people to help me navigate, infrastructure for the blind. I curious how it would peak my other senses, where my thoughts would go, would I become irritable? Would I experience different physical process? For example, would I have an urge to open my eyes, like you get the urge to scratch an itchy spot? Would my ears become tired like my eyes do? I should do a sensory deprevation tank. I've heard after a few days some people start to hallucinate. Are their long term physical effects? Could this hurt my vision (eyes / brain / optical nerve)? People wear eye patches to correct lazy eyes, so maybe not. But are there risks to using an eyepatch to straighten a lazy eye? Also people go into comas and presumably have their eyes shut. Are there eye risks with this? I'd like to queue up a lot of music / podcasts. It might be interesting to 'watch' a movie, or go to a concert. Or go to a more visual event like a basketball game.
+
+
+Learning language different country like a child, maybe small dose of psycadelics to put you in a more childlike state. Literally be treated like a child ('mama', 'dada'). No responsibilities, meals are fed, you are allowed to roll on the floor and cry. Try to get into a childlike state, play with toys, etc. The idea is to see if children really do pick up language faster than adults. The problems with this is measure 'depth'. Am I trying to understand adult learner vs childs first language or childs second language (say learn a new language at six years old). How is 'depth' measured? Ability to understand, communicate, pronounciation? (Also this is not reading / writing, only spoken)
+
+
+To better understand how visual / facial queues / lip reading increases information transfer (I specifically am looking at pure, dry information transfer, and not conveying emotion, consensus building / breaking, "reading" the other person). The idea is to set high and low volume thresholds that the speaker should keep their speaking volume between. The volume should be 
+Actually, I think you could simplify and standardize this experiment. Just have a video of somebodies face when they are talking. Set the volume to a level barely audible. The listener listens with eyes open once and eyes closed once. Can they understand the person better when their eyes are open? Because you usually understand somebody better the second time hearing something, you'd have to have videos with different content. The order of videos played for each listener should be randomized, as well as randomizing eyes open / closed listening order. I'm hoping this helps us understand how much we lip read / use facial expersion to aid understanding (from a pure volume level, not any deeper form of understanding). I'm curious how this would differ across languages, like the more tonal Chinese, or languages that make more or less varied mouth movements.
+
+
+
+Thought excersize: will human to human (communication / information transfer) ever be perfect? Probably no. How could we fully experience how somebody 'feels'. Language (with expression and tone, etc) has issues all along the pipeline - not understanding your subconsious, internal transfer to words, context the other person has (does this matter?), etc. 
