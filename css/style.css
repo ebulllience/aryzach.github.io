@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600');
 @import "syntaxHighlighting.css";
-
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
 
 @media (max-width: 800px) {
 		body {
@@ -63,6 +63,11 @@ nav a {
 		text-decoration: none;
 		padding: 12px;
 		margin: 4px;
+}
+
+a.external {
+    background: url(/images/external.png) center right no-repeat;
+    padding-right: 13px;
 }
 
 table,
