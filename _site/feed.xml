@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-08-28T13:47:14-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-08-28T14:53:08-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
 </subtitle><entry><title type="html">Tetris with Cats -&amp;gt; Snake with ZIO</title><link href="http://localhost:4000/ZIO-snake" rel="alternate" type="text/html" title="Tetris with Cats -&amp;gt; Snake with ZIO" /><published>2021-07-22T10:53:29-04:00</published><updated>2021-07-22T10:53:29-04:00</updated><id>http://localhost:4000/tetris-with-cats-to-snake-with-ZIO</id><content type="html" xml:base="http://localhost:4000/ZIO-snake">&lt;p&gt;&lt;img src=&quot;images/snake.gif&quot; alt=&quot;snake example gif&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;(&lt;a href=&quot;https://github.com/aryzach/snake-console-game-scala-ZIO&quot;&gt;git repo&lt;/a&gt;)
-(&lt;a href=&quot;https://github.com/lpld/simple-games&quot;&gt;original project&lt;/a&gt;&lt;/p&gt;
+(&lt;a href=&quot;https://github.com/lpld/simple-games&quot;&gt;original project&lt;/a&gt;)&lt;/p&gt;
 
 &lt;p&gt;I wanted to learn to work with ZIO because the job I’m hoping to start uses it heavily. Their code base also has some Cats Effect code. My goal here was to port this Cats-based FP Tetris console game to a ZIO-based console game. This is a daily log of the progress, hurdles, and thoughts.&lt;/p&gt;
 
@@ -89,7 +89,7 @@
 &lt;span class=&quot;nv&quot;&gt;states&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;takeWhile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;direction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;I’m not sure if this is more or less efficient than doing an IO random call only when needed (when the snake ate food). I don’t know enough about how streams work. If any stream that can be precomputed precomputes with a lot of values, it might be more efficient than doing ‘random IO’ only when needed. Regardless, it probably doesn’t matter at all for this app, and it prematurely optimizing. But it’s fun to think about!&lt;/p&gt;
+&lt;p&gt;I’m not sure if this is more or less efficient than doing an IO random call only when needed (when the snake ate food). I don’t know enough about how streams work. If any stream that can be precomputed precomputes with a lot of values, it might be more efficient than doing ‘random IO’ only when needed. Regardless, it probably doesn’t matter at all for this app, and it’s prematurely optimizing. But it’s fun to think about!&lt;/p&gt;
 
 &lt;p&gt;Now the game is largely feature complete. It’s not a full snake game, because it never ends and you never lose, but it’s all ported to ZIO, which was my main learning goal.&lt;/p&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Journey to ZIO</title><link href="http://localhost:4000/journey-to-zio" rel="alternate" type="text/html" title="Journey to ZIO" /><published>2021-07-08T11:35:05-04:00</published><updated>2021-07-08T11:35:05-04:00</updated><id>http://localhost:4000/journey-to-zio</id><content type="html" xml:base="http://localhost:4000/journey-to-zio">&lt;p&gt;I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m learning Scala and ZIO.&lt;/p&gt;
 
@@ -360,7 +360,9 @@ python3 OTAserver.py &amp;amp;
 &lt;hr /&gt;
 &lt;h4 id=&quot;overall&quot;&gt;Overall&lt;/h4&gt;
 &lt;p&gt;The ideal hardware setup would be an SPDT relay on built-in Sonoff SV controlling a 3-wire ball valve, powered by a 5-10 watt solar panel and 3-4 lithium batteries or an appropriately-sized supercapacitor.
-The ideal software architeture would be native phone apps and a web app, with a data dashboard to view sensor data.&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"></summary></entry><entry><title type="html">Solar Powered Ranger</title><link href="http://localhost:4000/solar-powered-ranger" rel="alternate" type="text/html" title="Solar Powered Ranger" /><published>2021-04-16T14:47:25-04:00</published><updated>2021-04-16T14:47:25-04:00</updated><id>http://localhost:4000/solar-powered-ranger</id><content type="html" xml:base="http://localhost:4000/solar-powered-ranger">&lt;p&gt;I wanted to passively charge a &lt;a href=&quot;https://ranger.polaris.com/en-us/ranger-ev/&quot;&gt;Polaris Ranger EV&lt;/a&gt; from solar panels. Two 100 watt solar panels had been installed on top of the ranger. The ranger originally had lead-acid batteries. Running and charging lead-acid from solar is simple with a solar controller, but the ranger had already been converted to run off of a lithium battery, which meant it had a battery management system (BMS). Powering the BMS was the crux of this problem.&lt;/p&gt;
+The ideal software architeture would be native phone apps and a web app, with a data dashboard to view sensor data.&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"></summary></entry><entry><title type="html">Solar Powered Ranger</title><link href="http://localhost:4000/solar-powered-ranger" rel="alternate" type="text/html" title="Solar Powered Ranger" /><published>2021-04-16T14:47:25-04:00</published><updated>2021-04-16T14:47:25-04:00</updated><id>http://localhost:4000/solar-powered-ranger</id><content type="html" xml:base="http://localhost:4000/solar-powered-ranger">&lt;p&gt;&lt;img src=&quot;images/ranger.jpg&quot; alt=&quot;ranger&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I wanted to passively charge a &lt;a href=&quot;https://ranger.polaris.com/en-us/ranger-ev/&quot;&gt;Polaris Ranger EV&lt;/a&gt; from solar panels. Two 100 watt solar panels had been installed on top of the ranger. The ranger originally had lead-acid batteries. Running and charging lead-acid from solar is simple with a solar controller, but the ranger had already been converted to run off of a lithium battery, which meant it had a battery management system (BMS). Powering the BMS was the crux of this problem.&lt;/p&gt;
 
 &lt;p&gt;I decided I only wanted to power the BMS when the solar panels were producing power. I was able to achieve this using a combination of the following:&lt;/p&gt;
 &lt;ul&gt;
@@ -371,7 +373,11 @@ The ideal software architeture would be native phone apps and a web app, with a 
   &lt;li&gt;3A fuse&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;&lt;img src=&quot;images/solarOnRanger.jpg&quot; alt=&quot;solar panels on ranger&quot; /&gt;&lt;/p&gt;
+
 &lt;p&gt;So here we take solar power (two 100 watt panels in series, so 0 - 56 volts), convert it to 24v to power the BMS. Then the BMS is sampling the battery. When the BMS determines the battery should be charged, it toggles an output pin from float to ground. Then I also take 24v to signal to the relay. At this point, when the BMS is powered and pulls the output pin to ground, the relay closes. The relay will open and close the connection from the solar controller to the battery.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/rangerBoard.jpeg&quot; alt=&quot;ranger board&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This approach worked in simple scenarios such as when the sun was shining or when it wasn’t, but I ran into two coupled issues:&lt;/p&gt;
 &lt;ul&gt;
@@ -379,7 +385,15 @@ The ideal software architeture would be native phone apps and a web app, with a 
   &lt;li&gt;partial light conditions (open-circuit panel voltage &amp;lt;40v) when hooked up to the battery and when the BMS indicates to charge. In this scenario, the relay closes, connecting the solar controller to the batteries. Then the batteries pull the panel voltage down (to under 9v), which in turn turns off the BMS. Once the BMS turns off and the batteries stop charging, the solar panel open-circuit voltage rises again, which triggers the BMS to turn on. And the cycle repeats with a period of about 1 second.&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;&lt;img src=&quot;images/boardInRanger.jpg&quot; alt=&quot;testing board&quot; /&gt;&lt;/p&gt;
+
 &lt;p&gt;These issues indicated a need for hysteresis in the system. Because the hysteresis had to be low power, I couldn’t use a software solution which would’ve relied on a bare minimum of powering a microcontroller. I found a low powered active circuit solution that relied on a &lt;a href=&quot;https://en.wikipedia.org/wiki/Comparator#:~:text=In%20electronics%2C%20a%20comparator%20is,and%20one%20binary%20digital%20output%20.&quot;&gt;comparator&lt;/a&gt;. I used the &lt;a href=&quot;https://www.ti.com/product/LM339&quot;&gt;LM339&lt;/a&gt; and found this &lt;a href=&quot;https://www.daycounter.com/Calculators/Comparator-Hysteresis-Calculator.phtml&quot;&gt;calculator&lt;/a&gt; useful. I don’t have a good intuition for how a comparator should behave, so I leaned heavy on trial and error with the calculator to find appropriate voltage and resistor values.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/hysteresisDiagram.jpg&quot; alt=&quot;hysteresis diagram&quot; /&gt;
+Hysteresis diagram&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/circuitDiagramWithHysteresis.jpg&quot; alt=&quot;solar panels on ranger&quot; style=&quot;transform:rotate(270deg); margin-bottom: -50px; margin-top: -50px;&quot; /&gt;
+Full circuit diagram with hysteresis circuit&lt;/p&gt;
 
 &lt;p&gt;The goal of the comparator / hysteresis circuit is to differentiate ON vs OFF threshold values. In my case, I wanted the BMS to turn on when the solar panel voltage was above 40v and turn off when it was below 10v. This would eliminate the power cycling of the BMS when in partial sun and when the battery was connected to the solar controller / solar panels. I learned two technical lessons through experimentation with the comparator:&lt;/p&gt;
 &lt;ul&gt;
@@ -398,6 +412,8 @@ Because the comparator consumed such low power, I used the battery to supply 24v
 40v was set as the high threshold because when the panels read an open-cicuit voltage of &amp;lt;40v, the closed-circuit voltage is under 9v. Because the DC converter voltage minimum was 9v, this created the unwanted power cycle effect.&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;&lt;img src=&quot;images/rangerHysteresisBreadboard.jpeg&quot; alt=&quot;ranger hysteresis breadboard&quot; style=&quot;transform:rotate(270deg); margin-bottom: -50px; margin-top: -50px;&quot; /&gt;&lt;/p&gt;
+
 &lt;p&gt;Now, this circuit worked as expected. The new issue was to harden the system to tolerate both vibration and mud, which is a lot less interesting to talk about.&lt;/p&gt;
 
 &lt;p&gt;Originally, the ranger used a different &lt;a href=&quot;https://www.amazon.com/Genasun-GVB-8-Pb-48V-WP-Waterproof-Controller-Batteries/dp/B07H8SYB28/ref=pd_lpo_86_t_0/138-2639310-8966331?_encoding=UTF8&amp;amp;pd_rd_i=B07H8SYB28&amp;amp;pd_rd_r=f6de1b83-7f25-4575-9c5c-064d36f5a8df&amp;amp;pd_rd_w=jZxcf&amp;amp;pd_rd_wg=4Q7tc&amp;amp;pf_rd_p=fb1e266d-b690-4b4f-b71c-bd35e5395976&amp;amp;pf_rd_r=1N0XHAM1TXFKEFB1A66T&amp;amp;psc=1&amp;amp;refRID=1N0XHAM1TXFKEFB1A66T&quot;&gt;solar controller for the lead-acid batteries&lt;/a&gt;, but when that didn’t work (3 charging cycles were too reserved for the lithium), I used &lt;a href=&quot;https://www.amazon.com/dp/B08JZCRKDR/?coliid=I3TSBTV63CHLZD&amp;amp;colid=2M5Y12QIIIVYU&amp;amp;psc=1&amp;amp;ref_=lv_ov_lig_dp_it&quot;&gt;this&lt;/a&gt;&lt;/p&gt;
@@ -408,8 +424,8 @@ BMS DC converter needs to be isolated because the auxiliary ground is different 
 &lt;p&gt;What I learned:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;When working with signal voltages, use the highest resistance possible without diluting your signal. This avoids burning off power in the resister&lt;/li&gt;
-  &lt;li&gt;Using solar as a switch and only powering the BMS when it was sunny turned out to be an unneeded constraint. The BMS consumes about 2 watts. A simpler solution would’ve been powering the BMS directly from the battery and taking the power hit of 2 watts. The issue with this would be the possibility of draining and damaging the battery if it got too low. The benefit would be that the batteries would charge in times where the hysteresis circuit would prevent charging but when there was still some sun, notably around an open-circuit panel voltage of 30 - 40v&lt;/li&gt;
+  &lt;li&gt;Using solar as a switch and only powering the BMS when it was sunny turned out to be an unneeded constraint. The BMS consumes about 2 watts. A simpler solution would’ve been powering the BMS directly from the battery and taking the power hit of 2 watts. The issue with this would be the possibility of draining and damaging the battery if it got too low. The benefit would be that the batteries would charge in times where the hysteresis circuit would prevent charging but when there was still some sun, notably around an open-circuit panel voltage of 30 - 40v. This is the solution I ended up implementing, so as not to spend more time hardening the breadboard prototype circuit.&lt;/li&gt;
   &lt;li&gt;Instead of hysteresis, could’ve used a timer circuit. This could reduce BMS power cycling when driving through shade, but when it’s still sunny elsewhere&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The BMS is the &lt;a href=&quot;https://www.orionbms.com/manuals/pdf/wiring_jr.pdf&quot;&gt;Orion BMS Jr.&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html">I wanted to passively charge a Polaris Ranger EV from solar panels. Two 100 watt solar panels had been installed on top of the ranger. The ranger originally had lead-acid batteries. Running and charging lead-acid from solar is simple with a solar controller, but the ranger had already been converted to run off of a lithium battery, which meant it had a battery management system (BMS). Powering the BMS was the crux of this problem.</summary></entry></feed>
+&lt;p&gt;The BMS is the &lt;a href=&quot;https://www.orionbms.com/manuals/pdf/wiring_jr.pdf&quot;&gt;Orion BMS Jr.&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"></summary></entry></feed>
