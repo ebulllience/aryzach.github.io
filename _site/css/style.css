@@ -23,17 +23,23 @@ body {
 		text-align: left;
 }
 
-body.home {
+.home {
 		max-width: 100%;
 		font-size: 1.3rem;
 		text-align: center;
 }
+
 @media screen and (max-device-width: 800px) {
 		body {
 				padding: 0;
 				margin: 0;
 		}
+		.home {
+				font-size: 2rem;
+				line-height: 2rem;
+		}
 }
+
 ul {
 		margin-left: auto; 
 		margin-right: auto; 
@@ -52,7 +58,7 @@ ul.home {
 
 nav {
 		max-width: 100%;
-		font-size: 1.3rem;
+		//font-size: 1.3rem;
 		text-align: center;
 
 }
