@@ -8,7 +8,7 @@ permalink: smart-irrigation
 
 <img src="images/valveModuleEnclosure.jpg"
      alt="Valve module without valve"
-		 style="transform:rotate(90deg)"
+		 style="transform:rotate(90deg); margin-bottom: -50px; margin-top: -50px;"
 		 />
 
 ### Problem 

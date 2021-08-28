@@ -5,6 +5,12 @@ date: 2021-07-22T10:53:29-04:00
 permalink: ZIO-snake
 ---
 
+<img src="images/snake.gif"
+     alt="snake example gif"
+		 />
+
+([git repo](https://github.com/aryzach/snake-console-game-scala-ZIO))
+
 I wanted to learn to work with ZIO because the job I'm hoping to start uses it heavily. Their code base also has some Cats Effect code. My goal here was to port this Cats-based FP Tetris console game to a ZIO-based console game. This is a daily log of the progress, hurdles, and thoughts.
 
 ### Entry 1
@@ -96,5 +102,4 @@ I'm not sure if this is more or less efficient than doing an IO random call only
 
 Now the game is largely feature complete. It's not a full snake game, because it never ends and you never lose, but it's all ported to ZIO, which was my main learning goal. 
 
-Here is the [repository](https://github.com/aryzach/snake-console-game-scala-ZIO).
 
