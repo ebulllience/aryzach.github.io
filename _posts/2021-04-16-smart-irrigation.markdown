@@ -5,12 +5,17 @@ date:   2021-04-16 11:47:25 -0700
 categories: jekyll update
 permalink: smart-irrigation 
 ---
+
+<img src="images/valveModuleEnclosure.jpg"
+     alt="Valve module without valve"
+		 style="transform:rotate(90deg)"
+		 />
+
 ### Problem 
 The problem that we are facing is regularly irrigating roughly 40 - 100 acres with as little water, labor, and power possible. Currently, we have about 20 overhead sprinkler valves and 50 drip irrigation valves. It's a roughly 5 - 15 minute round trip to change each sprinkler valve, which both takes time and interrupt other projects you may be working on. This translates to roughly four labor hours to irrigate 40 acres, and will take even more time when the rest of the property needs to be irrigated. The 50 drip irrigation valves are less of an issue right now because the valves are in a more central location. 
 
 Secondary to the issue of manual labor is minimizing energy costs and water usage. In 2020, the energy cost was roughly $12,000 to irrigate 40 acres. We're also limited by our water supply, a common problem for farmers in California. When we are near the end of the irrigation season (September - November), the creek produces much less water and at times, the pumps dry up the creek. Currently we only irrigate 40 acres, which is about 40% of what we plan to irrigate. As we irrigate more land, it'll be important to use water resources more efficiently and save on energy costs when possible.  
 
-(aerial image with drawn out irrigation)
 
 ### Proposed Solution
  - First stage: Implement remote on / off functionality for each valve
@@ -145,7 +150,8 @@ I'd already started managing a continuously operational server on a Raspberry Pi
 #bash
 ......
 sleep 2 
-ps aux | grep redis | awk '{print $2}' | head -n 1 | xargs sudo kill -9
+ps aux | grep redis | awk '{print $2}' | 
+	head -n 1 | xargs sudo kill -9
 runuser -l pi -c 'redis-server &' 
 sleep 2
 
@@ -155,8 +161,11 @@ sudo iptables -t nat -A PREROUTING
 
 python3 /home/pi/twistedApp/twistedApp.py & 
 python3 /home/pi/zmqServer.py & 
-sudo python3 /home/pi/twistedApp/app/tools/network/pingLAN.py &
-ps aux | grep mosquitto | awk '{print $2}' | head -n 1 | xargs sudo kill -9
+sudo python3 
+	/home/pi/twistedApp/
+		app/tools/network/pingLAN.py &
+ps aux | grep mosquitto | awk '{print $2}' | 
+	head -n 1 | xargs sudo kill -9
 mosquitto &
 sleep 2
 python3 mqttServer.py &

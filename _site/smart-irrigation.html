@@ -24,12 +24,12 @@
     <h1>Smart Irrigation</h1>
 <p>16 Apr 2021 </p>
 
+<p><img src="images/valveModuleEnclosure.jpg" alt="Valve module without valve" style="transform:rotate(90deg)" /></p>
+
 <h3 id="problem">Problem</h3>
 <p>The problem that we are facing is regularly irrigating roughly 40 - 100 acres with as little water, labor, and power possible. Currently, we have about 20 overhead sprinkler valves and 50 drip irrigation valves. It’s a roughly 5 - 15 minute round trip to change each sprinkler valve, which both takes time and interrupt other projects you may be working on. This translates to roughly four labor hours to irrigate 40 acres, and will take even more time when the rest of the property needs to be irrigated. The 50 drip irrigation valves are less of an issue right now because the valves are in a more central location.</p>
 
 <p>Secondary to the issue of manual labor is minimizing energy costs and water usage. In 2020, the energy cost was roughly $12,000 to irrigate 40 acres. We’re also limited by our water supply, a common problem for farmers in California. When we are near the end of the irrigation season (September - November), the creek produces much less water and at times, the pumps dry up the creek. Currently we only irrigate 40 acres, which is about 40% of what we plan to irrigate. As we irrigate more land, it’ll be important to use water resources more efficiently and save on energy costs when possible.</p>
-
-<p>(aerial image with drawn out irrigation)</p>
 
 <h3 id="proposed-solution">Proposed Solution</h3>
 <ul>
@@ -166,7 +166,8 @@
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#bash</span>
 ......
 <span class="nb">sleep </span>2 
-ps aux | <span class="nb">grep </span>redis | <span class="nb">awk</span> <span class="s1">'{print $2}'</span> | <span class="nb">head</span> <span class="nt">-n</span> 1 | xargs <span class="nb">sudo kill</span> <span class="nt">-9</span>
+ps aux | <span class="nb">grep </span>redis | <span class="nb">awk</span> <span class="s1">'{print $2}'</span> | 
+	<span class="nb">head</span> <span class="nt">-n</span> 1 | xargs <span class="nb">sudo kill</span> <span class="nt">-9</span>
 runuser <span class="nt">-l</span> pi <span class="nt">-c</span> <span class="s1">'redis-server &amp;'</span> 
 <span class="nb">sleep </span>2
 
@@ -176,8 +177,11 @@ runuser <span class="nt">-l</span> pi <span class="nt">-c</span> <span class="s1
 
 python3 /home/pi/twistedApp/twistedApp.py &amp; 
 python3 /home/pi/zmqServer.py &amp; 
-<span class="nb">sudo </span>python3 /home/pi/twistedApp/app/tools/network/pingLAN.py &amp;
-ps aux | <span class="nb">grep </span>mosquitto | <span class="nb">awk</span> <span class="s1">'{print $2}'</span> | <span class="nb">head</span> <span class="nt">-n</span> 1 | xargs <span class="nb">sudo kill</span> <span class="nt">-9</span>
+<span class="nb">sudo </span>python3 
+	/home/pi/twistedApp/
+		app/tools/network/pingLAN.py &amp;
+ps aux | <span class="nb">grep </span>mosquitto | <span class="nb">awk</span> <span class="s1">'{print $2}'</span> | 
+	<span class="nb">head</span> <span class="nt">-n</span> 1 | xargs <span class="nb">sudo kill</span> <span class="nt">-9</span>
 mosquitto &amp;
 <span class="nb">sleep </span>2
 python3 mqttServer.py &amp;
@@ -266,6 +270,20 @@ The ideal software architeture would be native phone apps and a web app, with a 
 
   </body>
 </html>
+<script>
 
+		// to remove space around images (bc they were wrapped with a <p> tag which adds padding/margin
+		const allPTags = document.querySelectorAll("p");
+
+		allPTags.forEach((elem) => {
+				console.log(elem.childNodes[0].tagName);
+				console.log(elem.parentNode);
+
+				if (elem.childNodes.length === 1 && elem.childNodes[0].tagName === "IMG") {
+						elem.parentNode.insertBefore(elem.childNodes[0], elem);
+						elem.remove();
+				}
+		});
+</script>
 
 

@@ -121,6 +121,20 @@
 
   </body>
 </html>
+<script>
 
+		// to remove space around images (bc they were wrapped with a <p> tag which adds padding/margin
+		const allPTags = document.querySelectorAll("p");
+
+		allPTags.forEach((elem) => {
+				console.log(elem.childNodes[0].tagName);
+				console.log(elem.parentNode);
+
+				if (elem.childNodes.length === 1 && elem.childNodes[0].tagName === "IMG") {
+						elem.parentNode.insertBefore(elem.childNodes[0], elem);
+						elem.remove();
+				}
+		});
+</script>
 
 

@@ -22,41 +22,57 @@
 </nav>
 
     <body class="home">
-<h1>Demos</h1>
-<a href="snake/web.html">Cannibalistic Snake</a>
+		<h1>Demos</h1>
+		<a href="snake/web.html">Cannibalistic Snake</a>
 
-<h1>Posts</h1>
+		<h1>Posts</h1>
 
-<ul class="home">
-    <div>.</div>
-    
-    <li>
-        <a href="/ZIO-snake">Tetris with Cats -> Snake with ZIO</a>
-        <div>.</div>
-    </li>
-    
-    <li>
-        <a href="/journey-to-zio">Journey to ZIO</a>
-        <div>.</div>
-    </li>
-    
-    <li>
-        <a href="/solar-powered-ranger">Solar Powered Ranger</a>
-        <div>.</div>
-    </li>
-    
-    <li>
-        <a href="/smart-irrigation">Smart Irrigation</a>
-        <div>.</div>
-    </li>
-    
-</ul>
+		<ul class="home">
+				<div>.</div>
+				
+				<li>
+						<a href="/ZIO-snake">Tetris with Cats -> Snake with ZIO</a>
+						<div>.</div>
+				</li>
+				
+				<li>
+						<a href="/journey-to-zio">Journey to ZIO</a>
+						<div>.</div>
+				</li>
+				
+				<li>
+						<a href="/solar-powered-ranger">Solar Powered Ranger</a>
+						<div>.</div>
+				</li>
+				
+				<li>
+						<a href="/smart-irrigation">Smart Irrigation</a>
+						<div>.</div>
+				</li>
+				
+		</ul>
 
-<h6><a href="https://soundcloud.com/user-596365273/sets" rel="noreferrer noopener" target="_blank">-</a></h6>
+		<h6><a href="https://soundcloud.com/user-596365273/sets" rel="noreferrer noopener" target="_blank">-</a></h6>
 </body>
+
+
 
   </body>
 </html>
+<script>
 
+		// to remove space around images (bc they were wrapped with a <p> tag which adds padding/margin
+		const allPTags = document.querySelectorAll("p");
+
+		allPTags.forEach((elem) => {
+				console.log(elem.childNodes[0].tagName);
+				console.log(elem.parentNode);
+
+				if (elem.childNodes.length === 1 && elem.childNodes[0].tagName === "IMG") {
+						elem.parentNode.insertBefore(elem.childNodes[0], elem);
+						elem.remove();
+				}
+		});
+</script>
 
 

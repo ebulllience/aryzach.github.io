@@ -3,20 +3,22 @@ layout: default
 title: Zach Blog
 ---
 <body class="home">
-<h1>Demos</h1>
-<a href="snake/web.html">Cannibalistic Snake</a>
+		<h1>Demos</h1>
+		<a href="snake/web.html">Cannibalistic Snake</a>
 
-<h1>Posts</h1>
+		<h1>Posts</h1>
 
-<ul class="home">
-    <div>.</div>
-    {% for post in site.posts %}
-    <li>
-        <a href="{{ post.url }}">{{ post.title }}</a>
-        <div>.</div>
-    </li>
-    {% endfor %}
-</ul>
+		<ul class="home">
+				<div>.</div>
+				{% for post in site.posts %}
+				<li>
+						<a href="{{ post.url }}">{{ post.title }}</a>
+						<div>.</div>
+				</li>
+				{% endfor %}
+		</ul>
 
-<h6><a href="https://soundcloud.com/user-596365273/sets" rel="noreferrer noopener" target="_blank">-</a></h6>
+		<h6><a href="https://soundcloud.com/user-596365273/sets" rel="noreferrer noopener" target="_blank">-</a></h6>
 </body>
+
+
