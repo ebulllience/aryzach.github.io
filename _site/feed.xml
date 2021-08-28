@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-08-28T14:53:08-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-08-28T15:03:12-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
 </subtitle><entry><title type="html">Tetris with Cats -&amp;gt; Snake with ZIO</title><link href="http://localhost:4000/ZIO-snake" rel="alternate" type="text/html" title="Tetris with Cats -&amp;gt; Snake with ZIO" /><published>2021-07-22T10:53:29-04:00</published><updated>2021-07-22T10:53:29-04:00</updated><id>http://localhost:4000/tetris-with-cats-to-snake-with-ZIO</id><content type="html" xml:base="http://localhost:4000/ZIO-snake">&lt;p&gt;&lt;img src=&quot;images/snake.gif&quot; alt=&quot;snake example gif&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;(&lt;a href=&quot;https://github.com/aryzach/snake-console-game-scala-ZIO&quot;&gt;git repo&lt;/a&gt;)
@@ -389,11 +389,17 @@ The ideal software architeture would be native phone apps and a web app, with a 
 
 &lt;p&gt;These issues indicated a need for hysteresis in the system. Because the hysteresis had to be low power, I couldn’t use a software solution which would’ve relied on a bare minimum of powering a microcontroller. I found a low powered active circuit solution that relied on a &lt;a href=&quot;https://en.wikipedia.org/wiki/Comparator#:~:text=In%20electronics%2C%20a%20comparator%20is,and%20one%20binary%20digital%20output%20.&quot;&gt;comparator&lt;/a&gt;. I used the &lt;a href=&quot;https://www.ti.com/product/LM339&quot;&gt;LM339&lt;/a&gt; and found this &lt;a href=&quot;https://www.daycounter.com/Calculators/Comparator-Hysteresis-Calculator.phtml&quot;&gt;calculator&lt;/a&gt; useful. I don’t have a good intuition for how a comparator should behave, so I leaned heavy on trial and error with the calculator to find appropriate voltage and resistor values.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;images/hysteresisDiagram.jpg&quot; alt=&quot;hysteresis diagram&quot; /&gt;
-Hysteresis diagram&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;images/hysteresisDiagram.jpg&quot; alt=&quot;hysteresis diagram&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;images/circuitDiagramWithHysteresis.jpg&quot; alt=&quot;solar panels on ranger&quot; style=&quot;transform:rotate(270deg); margin-bottom: -50px; margin-top: -50px;&quot; /&gt;
-Full circuit diagram with hysteresis circuit&lt;/p&gt;
+&lt;p&gt;Hysteresis diagram&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/circuitDiagramWithHysteresis.jpg&quot; alt=&quot;solar panels on ranger&quot; style=&quot;transform:rotate(270deg); margin-bottom: -60px; margin-top: -50px;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Full circuit diagram with hysteresis circuit&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;p&gt;The goal of the comparator / hysteresis circuit is to differentiate ON vs OFF threshold values. In my case, I wanted the BMS to turn on when the solar panel voltage was above 40v and turn off when it was below 10v. This would eliminate the power cycling of the BMS when in partial sun and when the battery was connected to the solar controller / solar panels. I learned two technical lessons through experimentation with the comparator:&lt;/p&gt;
 &lt;ul&gt;

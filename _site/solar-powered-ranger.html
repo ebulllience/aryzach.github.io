@@ -53,11 +53,17 @@
 
 <p>These issues indicated a need for hysteresis in the system. Because the hysteresis had to be low power, I couldn’t use a software solution which would’ve relied on a bare minimum of powering a microcontroller. I found a low powered active circuit solution that relied on a <a href="https://en.wikipedia.org/wiki/Comparator#:~:text=In%20electronics%2C%20a%20comparator%20is,and%20one%20binary%20digital%20output%20.">comparator</a>. I used the <a href="https://www.ti.com/product/LM339">LM339</a> and found this <a href="https://www.daycounter.com/Calculators/Comparator-Hysteresis-Calculator.phtml">calculator</a> useful. I don’t have a good intuition for how a comparator should behave, so I leaned heavy on trial and error with the calculator to find appropriate voltage and resistor values.</p>
 
-<p><img src="images/hysteresisDiagram.jpg" alt="hysteresis diagram" />
-Hysteresis diagram</p>
+<p><img src="images/hysteresisDiagram.jpg" alt="hysteresis diagram" /></p>
 
-<p><img src="images/circuitDiagramWithHysteresis.jpg" alt="solar panels on ranger" style="transform:rotate(270deg); margin-bottom: -50px; margin-top: -50px;" />
-Full circuit diagram with hysteresis circuit</p>
+<p>Hysteresis diagram</p>
+
+<hr />
+
+<p><img src="images/circuitDiagramWithHysteresis.jpg" alt="solar panels on ranger" style="transform:rotate(270deg); margin-bottom: -60px; margin-top: -50px;" /></p>
+
+<p>Full circuit diagram with hysteresis circuit</p>
+
+<hr />
 
 <p>The goal of the comparator / hysteresis circuit is to differentiate ON vs OFF threshold values. In my case, I wanted the BMS to turn on when the solar panel voltage was above 40v and turn off when it was below 10v. This would eliminate the power cycling of the BMS when in partial sun and when the battery was connected to the solar controller / solar panels. I learned two technical lessons through experimentation with the comparator:</p>
 <ul>

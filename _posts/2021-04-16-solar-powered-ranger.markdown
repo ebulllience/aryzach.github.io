@@ -43,13 +43,19 @@ These issues indicated a need for hysteresis in the system. Because the hysteres
 <img src="images/hysteresisDiagram.jpg"
      alt="hysteresis diagram"
 		 />
+
 Hysteresis diagram
+
+__________
 
 <img src="images/circuitDiagramWithHysteresis.jpg"
      alt="solar panels on ranger"
-		 style="transform:rotate(270deg); margin-bottom: -50px; margin-top: -50px;"
+		 style="transform:rotate(270deg); margin-bottom: -60px; margin-top: -50px;"
 		 />
+
 Full circuit diagram with hysteresis circuit
+
+__________
 
 The goal of the comparator / hysteresis circuit is to differentiate ON vs OFF threshold values. In my case, I wanted the BMS to turn on when the solar panel voltage was above 40v and turn off when it was below 10v. This would eliminate the power cycling of the BMS when in partial sun and when the battery was connected to the solar controller / solar panels. I learned two technical lessons through experimentation with the comparator: 
  - a higher reference voltage or supply voltage will give you greater difference between your high (on) and low (off) threshold voltages
