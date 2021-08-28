@@ -10,6 +10,7 @@ permalink: ZIO-snake
 		 />
 
 ([git repo](https://github.com/aryzach/snake-console-game-scala-ZIO))
+([original project](https://github.com/lpld/simple-games))
 
 I wanted to learn to work with ZIO because the job I'm hoping to start uses it heavily. Their code base also has some Cats Effect code. My goal here was to port this Cats-based FP Tetris console game to a ZIO-based console game. This is a daily log of the progress, hurdles, and thoughts.
 
@@ -98,7 +99,7 @@ val states: ZStream[Console with Clock with Random, IOException, GameState] =
 states.takeWhile(_.direction != false)
 ```
 
-I'm not sure if this is more or less efficient than doing an IO random call only when needed (when the snake ate food). I don't know enough about how streams work. If any stream that can be precomputed precomputes with a lot of values, it might be more efficient than doing 'random IO' only when needed. Regardless, it probably doesn't matter at all for this app, and it prematurely optimizing. But it's fun to think about!
+I'm not sure if this is more or less efficient than doing an IO random call only when needed (when the snake ate food). I don't know enough about how streams work. If any stream that can be precomputed precomputes with a lot of values, it might be more efficient than doing 'random IO' only when needed. Regardless, it probably doesn't matter at all for this app, and it's prematurely optimizing. But it's fun to think about!
 
 Now the game is largely feature complete. It's not a full snake game, because it never ends and you never lose, but it's all ported to ZIO, which was my main learning goal. 
 
