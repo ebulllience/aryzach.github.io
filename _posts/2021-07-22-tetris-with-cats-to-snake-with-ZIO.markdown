@@ -10,7 +10,7 @@ permalink: ZIO-snake
 		 />
 
 ([git repo](https://github.com/aryzach/snake-console-game-scala-ZIO))
-([original project](https://github.com/lpld/simple-games))
+([original project that this is modified from](https://github.com/lpld/simple-games))
 
 I wanted to learn to work with ZIO because the job I'm hoping to start uses it heavily. Their code base also has some Cats Effect code. My goal here was to port this Cats-based FP Tetris console game to a ZIO-based console game. This is a daily log of the progress, hurdles, and thoughts.
 
