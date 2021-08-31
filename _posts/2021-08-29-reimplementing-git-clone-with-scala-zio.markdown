@@ -1,6 +1,9 @@
 ---
+layout: post
 title: Reimplementing Git Clone with Scala / ZIO
 date: 2021-08-29T03:43:15-04:00
+categories: ZIO
+permalink: reimplementing-git-clone-with-scala-zio
 ---
 
 SWE practices I'll follow:
