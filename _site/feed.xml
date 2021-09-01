@@ -1,5 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-08-28T18:06:46-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
-</subtitle><entry><title type="html">Tetris with Cats -&amp;gt; Snake with ZIO</title><link href="http://localhost:4000/ZIO-snake" rel="alternate" type="text/html" title="Tetris with Cats -&amp;gt; Snake with ZIO" /><published>2021-07-22T10:53:29-04:00</published><updated>2021-07-22T10:53:29-04:00</updated><id>http://localhost:4000/tetris-with-cats-to-snake-with-ZIO</id><content type="html" xml:base="http://localhost:4000/ZIO-snake">&lt;p&gt;&lt;img src=&quot;images/snake.gif&quot; alt=&quot;snake example gif&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-09-01T11:35:25-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
+</subtitle><entry><title type="html">Reimplementing Git Clone with Scala / ZIO</title><link href="http://localhost:4000/reimplementing-git-clone-with-scala-zio" rel="alternate" type="text/html" title="Reimplementing Git Clone with Scala / ZIO" /><published>2021-08-29T03:43:15-04:00</published><updated>2021-08-29T03:43:15-04:00</updated><id>http://localhost:4000/reimplementing-git-clone-with-scala-zio</id><content type="html" xml:base="http://localhost:4000/reimplementing-git-clone-with-scala-zio">&lt;p&gt;SWE practices I’ll follow:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Write unit tests before writing code (kinda TDD, but really the development is driven by the original blog post)&lt;/li&gt;
+  &lt;li&gt;Only function-level comments (no in-function comments)&lt;/li&gt;
+  &lt;li&gt;Self-commenting code (will likely follow naming convensions from the Haskell implementation)&lt;/li&gt;
+  &lt;li&gt;Git commit often (no set rule, but after every function, major milestone, bug fix)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I’ll break the project up into phases. Phase 1 is completing the following:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Parse the clone url to extract the host, port and repository path information.&lt;/li&gt;
+  &lt;li&gt;Connect to the git server via TCP using the native git transport protocol.&lt;/li&gt;
+  &lt;li&gt;Negotiate the objects that need to be transferrered from the server to the client. This includes receiving the current state of the remote repository (in the form of a ref advertisement) that includes the refs the server has and for each ref the commit hash it points to.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;phase-1&quot;&gt;Phase 1&lt;/h2&gt;
+
+&lt;h4 id=&quot;step-1-read-post-and-understand-at-a-high-level&quot;&gt;Step 1: Read post and understand at a high level&lt;/h4&gt;
+&lt;p&gt;Half way through, the post became overwhelming. I decided to skim for a high level overview for the rest, and focus on a deep understanding of &lt;a href=&quot;https://stefan.saasen.me/articles/git-clone-in-haskell-from-the-bottom-up/#git-transport-and-pack-wire-protocol&quot;&gt;git transport and pack wire protocal&lt;/a&gt; so that I can start implementing that part of it.&lt;/p&gt;
+
+&lt;h4 id=&quot;step-2-understand-first-requirement-and-build-one-test-for-it---ref-discovery&quot;&gt;Step 2: Understand first requirement, and build one test for it - Ref discovery&lt;/h4&gt;
+&lt;p&gt;This will complete step 1 - 3 of the git clone process&lt;/p&gt;
+
+&lt;h4 id=&quot;step-3-write-code-to-pass-test&quot;&gt;Step 3: Write code to pass test&lt;/h4&gt;
+&lt;p&gt;Done. I should probably write more tests for better coverage, but my goal is to get a working program quickly, not one that will be put in production / care about resiliency.&lt;/p&gt;
+
+&lt;h4 id=&quot;step-4-write-ls-remote-function-this-uses-io-ill-start-using-zio-test-instead-of-scalatest&quot;&gt;Step 4: Write ls-remote function. This uses IO. I’ll start using zio-test instead of scalatest.&lt;/h4&gt;
+&lt;p&gt;I moved all tests to use the zio-test framework. I’ll still figure out what the test for this should look like.&lt;/p&gt;
+
+&lt;h4 id=&quot;step-5-ls-remote-sends-a-message-over-tcp-ill-have-to-learn-a-bit-about-how-tcp-works-the-actor-model-etc&quot;&gt;Step 5: ls-remote sends a message over TCP. I’ll have to learn a bit about how TCP works, the actor model, etc.&lt;/h4&gt;
+&lt;p&gt;I’m reading about TCP / Akka actors on &lt;a href=&quot;https://stackoverflow.com/questions/33747858/akka-tcp-client-how-can-i-send-a-message-over-tcp-using-akka-actor&quot;&gt;stackoverflow&lt;/a&gt; and from the &lt;a href=&quot;https://doc.akka.io/docs/akka/snapshot/io-tcp.html?language=scala&quot;&gt;official docs&lt;/a&gt; to understand how I can send a TCP message in Scala. I think the ZIO environments I’ll need are System and maybe Blocking. I haven’t worked with either of these ZIO environments, so that’ll be fun to learn about!&lt;/p&gt;
+
+&lt;h4 id=&quot;step-6-write-test-for-ls-remote&quot;&gt;Step 6: Write test for ls-remote&lt;/h4&gt;</content><author><name></name></author><category term="ZIO" /><summary type="html">SWE practices I’ll follow: Write unit tests before writing code (kinda TDD, but really the development is driven by the original blog post) Only function-level comments (no in-function comments) Self-commenting code (will likely follow naming convensions from the Haskell implementation) Git commit often (no set rule, but after every function, major milestone, bug fix)</summary></entry><entry><title type="html">Tetris with Cats -&amp;gt; Snake with ZIO</title><link href="http://localhost:4000/ZIO-snake" rel="alternate" type="text/html" title="Tetris with Cats -&amp;gt; Snake with ZIO" /><published>2021-07-22T10:53:29-04:00</published><updated>2021-07-22T10:53:29-04:00</updated><id>http://localhost:4000/tetris-with-cats-to-snake-with-ZIO</id><content type="html" xml:base="http://localhost:4000/ZIO-snake">&lt;p&gt;&lt;img src=&quot;images/snake.gif&quot; alt=&quot;snake example gif&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;(&lt;a href=&quot;https://github.com/aryzach/snake-console-game-scala-ZIO&quot;&gt;git repo&lt;/a&gt;)
 (&lt;a href=&quot;https://github.com/lpld/simple-games&quot;&gt;original project that this is modified from&lt;/a&gt;)&lt;/p&gt;
@@ -109,7 +142,7 @@
   &lt;li&gt;Follow &lt;a href=&quot;https://www.signifytechnology.com/blog/2021/01/fp-to-the-min-by-john-de-goes-scala-in-the-city-conference&quot;&gt;FP to the Min&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Finished Tic Tac Toe and extended it to have an optional bot. I ran into an issue when trying to generalize a function which I think has to do with polymorphic methods. For now, I’m moving on, but I’d still like to clean this up, and make a smarter bot. Here’s the &lt;a href=&quot;https://github.com/aryzach/scala-ZIO-ticTacToe&quot;&gt;repo&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;I found a &lt;a href=&quot;https://github.com/lpld/simple-games&quot;&gt;tetris game written with Cats&lt;/a&gt;. I wanted to build a game so I could focus on ZIO instead learning other tech / libraries. I had a hard time finding ZIO games that use streams, so I’m especially excited about this because it’ll help me learn about working with streams in general, with the bonus of learning some Cats. Maybe I’ll try to port the app to use ZIO instead of Cats. I’ve also never had to deal with drawing to the console. The rendering approach in this repo seems like it’s less mature than something like curses in Python, so I’m hoping to learn something about that, too. Hacking this project will also hopefully help me understand larger pure FP scala code bases and learn about structuring larger pure FP scala projects in general! This is a bigger project, so I’ll track it &lt;a href=&quot;https://aryzach.github.io/ZIO-snake&quot;&gt;in this blog post&lt;/a&gt;. And here’s my &lt;a href=&quot;https://github.com/aryzach/snake-console-game-scala-ZIO&quot;&gt;repo&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;I found a post about &lt;a href=&quot;https://stefan.saasen.me/articles/git-clone-in-haskell-from-the-bottom-up/&quot;&gt;cloning ‘git clone’ in Haskell&lt;/a&gt;. This is a #realworld FP app, and I’m super excited to implement it with Scala/ZIO. My primary learning goal is to get more practice with ZIO. My secondary goals are to practice much better SWE practices (agile, comments, good git practices) and to gain a better understanding of how git works.&lt;/li&gt;
+  &lt;li&gt;I found a post about &lt;a href=&quot;https://stefan.saasen.me/articles/git-clone-in-haskell-from-the-bottom-up/&quot;&gt;cloning ‘git clone’ in Haskell&lt;/a&gt;. This is a #realworld FP app, and I’m super excited to implement it with Scala/ZIO. My primary learning goal is to get more practice with ZIO. My secondary goals are to practice much better SWE practices (agile, comments, good git practices) and to gain a better understanding of how git works. TDD, Kanban, git practices, Extreme Programming, Scrum.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&quot;todo&quot;&gt;Todo:&lt;/h4&gt;
