@@ -36,3 +36,6 @@ I moved all tests to use the zio-test framework. I'll still figure out what the 
 I'm reading about TCP / Akka actors on [stackoverflow](https://stackoverflow.com/questions/33747858/akka-tcp-client-how-can-i-send-a-message-over-tcp-using-akka-actor) and from the [official docs](https://doc.akka.io/docs/akka/snapshot/io-tcp.html?language=scala) to understand how I can send a TCP message in Scala. I think the ZIO environments I'll need are System and maybe Blocking. I haven't worked with either of these ZIO environments, so that'll be fun to learn about!
 
 #### Step 6: Write test for ls-remote
+
+#### Step 7: Breaking down ls-remote
+I'm skipping the ls-remote test for now. I'm not quite sure yet how to write tests that depend on external services (like a local tcp / git server), let alone an internet-dependent service. I was able to get a prototyped local version of ref discovery working with akka. AKA I can see the correct git info when I put up a local git server, and run my tcp client code. It's not type-safe / functional / ZIO'd yet. It looks like there's some ZIO socket info [out there](https://zio.github.io/zio-nio/docs/essentials/essentials_sockets). I'm not sure if I'll be able to use this, or be able to wrap my akka setup in ZIO. It seems like this is the bulk of ls-remote though. 
