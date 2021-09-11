@@ -28,7 +28,7 @@ The Python code base relied on [TA-Lib](https://ta-lib.org/) for analysis. There
 Interactive Brokers, or IB, allows access to something called a 'paper' account where you can make trades with fake money. This will be used for testing.
 
 
-### MVP Specification
+### Plumbing MVP Specification
 I'm defining the MVP to have the following features:
 	- connect as a client to [Interactive Brokers](https://www.interactivebrokers.com/en/index.php?f=1338&gclid=CjwKCAjwp_GJBhBmEiwALWBQk04pNFhZN2JOUWFd2qZxdH4lo_a4KR5L3wuTZop26-jMHRLA0sKHFhoCZjUQAvD_BwE) 
 	- create a contract
@@ -38,7 +38,7 @@ I'm defining the MVP to have the following features:
 	- make a (dumb) sell decision
 	- sell a product
 
-I'll test this by viewing a change of dollar amount in the GUI for the paper account.
+This will just be a show that the APIs are working and can be plumbed together. I'll test this by viewing a change of dollar amount in the GUI for the paper account.
 
 ### Post 1
 I started with this project before I started writting this post, and up til now, I've been very sloppy with code and git. There have been many false starts as I deal with testing unsupported, open source IB client libraries. I've settled on a IB client wrapper, and have tested part of the API, so am confident that I can get something working with Scala now without having to use the native Java TWS API. I'm now at a place where I'll use better SWE practices. I'll keep a more detailed todo list in the project git repo, but here I'll overview status of features and bugs. I'll start writing tests and practice some TDD after I've delivered the MVP.
