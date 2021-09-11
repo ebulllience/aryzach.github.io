@@ -39,3 +39,8 @@ I'm reading about TCP / Akka actors on [stackoverflow](https://stackoverflow.com
 
 #### Step 7: Breaking down ls-remote
 I'm skipping the ls-remote test for now. I'm not quite sure yet how to write tests that depend on external services (like a local tcp / git server), let alone an internet-dependent service. I was able to get a prototyped local version of ref discovery working with akka. AKA I can see the correct git info when I put up a local git server, and run my tcp client code. It's not type-safe / functional / ZIO'd yet. It looks like there's some ZIO socket info [out there](https://zio.github.io/zio-nio/docs/essentials/essentials_sockets). I'm not sure if I'll be able to use this, or be able to wrap my akka setup in ZIO. It seems like this is the bulk of ls-remote though. 
+
+#### Step 8: Getting my actor to receive info (needed for lsRemote)
+Before, I only had the actor 'ask', or 'fire-and-forget', so I wouldn't get a response back. Now, lsRemote returns a Future, which is the return type of an ask. I'm still not super clear on the setup here. I'm not even sure how many actors I have, tbh, but something is working. I'll have to dig deeper to really understand what's going on here, and I'll probably be able to prune the process from what it is now.
+
+## This is on hold because I took a contract job building a HF trading bot in Scala. Here's some [notes on it] 
