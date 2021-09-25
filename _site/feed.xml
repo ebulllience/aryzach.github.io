@@ -1,5 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-09-01T11:35:25-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
-</subtitle><entry><title type="html">Reimplementing Git Clone with Scala / ZIO</title><link href="http://localhost:4000/reimplementing-git-clone-with-scala-zio" rel="alternate" type="text/html" title="Reimplementing Git Clone with Scala / ZIO" /><published>2021-08-29T03:43:15-04:00</published><updated>2021-08-29T03:43:15-04:00</updated><id>http://localhost:4000/reimplementing-git-clone-with-scala-zio</id><content type="html" xml:base="http://localhost:4000/reimplementing-git-clone-with-scala-zio">&lt;p&gt;SWE practices I’ll follow:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-09-24T20:39:46-05:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
+</subtitle><entry><title type="html">Getting money from the stock market</title><link href="http://localhost:4000/money" rel="alternate" type="text/html" title="Getting money from the stock market" /><published>2021-09-10T01:31:40-05:00</published><updated>2021-09-10T01:31:40-05:00</updated><id>http://localhost:4000/getting-money-from-the-stock-market</id><content type="html" xml:base="http://localhost:4000/money">&lt;p&gt;I recently started a contract to build a high-frequency trading bot. I’ll use this to document the experience, engineering workflow, daily work, exciting breakthroughs, difficult problems, etc.&lt;/p&gt;
+
+&lt;h3 id=&quot;background&quot;&gt;Background&lt;/h3&gt;
+&lt;p&gt;Somebody saw I had some hobby Haskell experience, so he contacted me about building a high-frequency securities trading bot in a functional language. He currently has an implementation in python that he built with a small team over the last 2 - 3 years. It’s a well-built code base, but ran into speed issues, so couldn’t compete in the markets. He said they’ve tried to speed up the processes using asyncIO and PyPy, but that it hasn’t been fruitful. The idea is to build it with a functional language because they better handle concurrency, and are just generally much faster compiled languages.&lt;/p&gt;
+
+&lt;p&gt;I’ve never done this before. I’ve never had to work with threads, concurrency, etc., let alone a functional project of this size. I told him all of this, and he understands what I know, but we came to a mutual understanding of expectations and mutual confidence that we can get this done. This is a huge challenge, I’ll learn a lot, and am getting paid to do it. I’ll be responsible for a highly technical engineering project. I’m super excited and grateful, and definitely a little nervous.&lt;/p&gt;
+
+&lt;p&gt;He has the domain expertise, experience from building something like this before, and the runway to fail smartly along the way. He’s also extremely energetic and passionate about the project.&lt;/p&gt;
+
+&lt;h3 id=&quot;choice-of-language&quot;&gt;Choice of language&lt;/h3&gt;
+&lt;p&gt;He wanted me to evaluate lots of languages. He’s not a functional programmer, but has read a lot about HFT and understands the project requirements and important metrics for evaluation. His requirements are that it’s in a fast, functional language (for concurrency). People also write safe, concurrent programs in Go, which isn’t functional, but I don’t know anything about Go, and he wants something functional, so we ruled out Go. Other languages include OCaml, Haskell, Erlang, Scala, Racket. His vision is to have a system written in lots of different functional languages, and become an oasis for functional programmers. Let’s start with one! I won’t go into details now, but we decided on Scala. I’ve used it a bit, it’s quicker to get something prototyped (because it’s less strict about side effects compared to Haskell), and has a big community. The idea is to build an MVP, understand some of the functional patterns needed, learn the domain, learn about concurrency. If we decide this language isn’t right after some time, well have learned a lot and will be able to port it to another functional language fairly quickly (in theory).&lt;/p&gt;
+
+&lt;h3 id=&quot;project-description--background&quot;&gt;Project description / background&lt;/h3&gt;
+&lt;p&gt;A high level overview, as my understanding now, is to read in real-time and historical market data about one or more &lt;a href=&quot;https://interactivebrokers.github.io/tws-api/contracts.html&quot;&gt;contracts&lt;/a&gt;, then do some analysis that will trigger a buy or sell event, or to take no action. The core of HFT is in the analysis and minimizing latency. Because analysis complexity and latency are at odds with each other on the axis of time, the art of HFT is finding the sweet spot along the axis of analysis and latency.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://interactivebrokers.github.io/tws-api/index.html&quot;&gt;Trader Workstation API&lt;/a&gt; is an interface to programmatically work on the markets. It has native Python support, which made it easy for their current code base to interface. It also has a Java API, but I didn’t want to deal with Java code, and found an open source Scala wrapper, &lt;a href=&quot;https://github.com/openquant/ibclient&quot;&gt;IBClient&lt;/a&gt;. It’s not documented, but matches the native API fairly closely.&lt;/p&gt;
+
+&lt;p&gt;The Python code base relied on &lt;a href=&quot;https://ta-lib.org/&quot;&gt;TA-Lib&lt;/a&gt; for analysis. There are a few similar tools in Java, but haven’t found a Scala version, or a Scala wrapper.&lt;/p&gt;
+
+&lt;p&gt;Interactive Brokers, or IB, allows access to something called a ‘paper’ account where you can make trades with fake money. This will be used for testing.&lt;/p&gt;
+
+&lt;h4 id=&quot;plumbing-mvp-specification&quot;&gt;Plumbing MVP Specification&lt;/h4&gt;
+&lt;p&gt;I’m defining the MVP to have the following features:
+	- connect as a client to &lt;a href=&quot;https://www.interactivebrokers.com/en/index.php?f=1338&amp;amp;gclid=CjwKCAjwp_GJBhBmEiwALWBQk04pNFhZN2JOUWFd2qZxdH4lo_a4KR5L3wuTZop26-jMHRLA0sKHFhoCZjUQAvD_BwE&quot;&gt;Interactive Brokers&lt;/a&gt; 
+	- create a contract
+	- receive historical data for the contract
+	- make a (dumb) buy decision
+	- buy a security 
+	- make a (dumb) sell decision
+	- sell a product&lt;/p&gt;
+
+&lt;p&gt;This will just be a show that the APIs are working and can be plumbed together. I’ll test this by viewing a change of dollar amount in the GUI for the paper account.&lt;/p&gt;
+
+&lt;h3 id=&quot;post-1&quot;&gt;Post 1&lt;/h3&gt;
+&lt;p&gt;I started with this project before I started writing this post, and up til now, I’ve been very sloppy with code and git. There have been many false starts as I deal with testing unsupported, open source IB client libraries. I’ve settled on a IB client wrapper, and have tested part of the API, so am confident that I can get something working with Scala now without having to use the native Java TWS API. I’m now at a place where I’ll use better SWE practices. I’ll keep a more detailed to-do list in the project git repo, but here I’ll overview status of features and bugs. I’ll start writing tests and practice some TDD after I’ve delivered the MVP.&lt;/p&gt;
+
+&lt;p&gt;Currently, I have:
+	- connect as a client to IB
+	- create a contract
+	- receive historical data&lt;/p&gt;
+
+&lt;p&gt;Next steps:
+	- make a buy and test&lt;/p&gt;
+
+&lt;h3 id=&quot;post-2&quot;&gt;Post 2&lt;/h3&gt;
+&lt;p&gt;When the markets are down I can’t fully test my code. So I decided improve my workflow today instead. My dev environment quickly got out of hand and I was requiring too many terminal windows. I’ve used tmux before but it’s not second nature. I decided to use it to manage my workflow better. I created &lt;a href=&quot;https://github.com/aryzach/dotfiles/blob/master/tmux-dev&quot;&gt;tmux startup script&lt;/a&gt; to streamline the process, and it’s already really paying off. Would highly recommend!&lt;/p&gt;
+
+&lt;p&gt;While it’s still the weekend and markets are down, I figured I’d spend time trying to find a Scala wrapper for ta-lib, or some other analysis library. This isn’t part of the plumbing MVP spec, but some kind of analysis is necessary for a full blown MVP.&lt;/p&gt;
+
+&lt;h3 id=&quot;post-3&quot;&gt;Post 3&lt;/h3&gt;
+&lt;p&gt;Buy and sell orders are showing up in the TWS GUI, so I know it’s partially working, but weren’t ‘transmitting’ because the order didn’t have an account allocated (the GUI was informing me about this issue). I didn’t know if this was a setting in the TWS GUI, or if it was exposed in the API. It turns out the Java native IB API allows orders to have an account, but the Scala wrapper I’m using didn’t expose that part of the Java API. Here’s the &lt;a href=&quot;https://github.com/openquant/ibclient/pull/2&quot;&gt;pull request&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The plumbing API is finished. Now Trading MVP.&lt;/p&gt;
+
+&lt;h4 id=&quot;trading-mvp-spec&quot;&gt;Trading MVP Spec&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;synchronously and continuously do the following:&lt;/li&gt;
+  &lt;li&gt;get historical data&lt;/li&gt;
+  &lt;li&gt;get OBV from historical data&lt;/li&gt;
+  &lt;li&gt;make a smarter buy / sell / hold decision from OBV info&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;project-is-on-hold&quot;&gt;Project is on hold&lt;/h3&gt;</content><author><name></name></author><category term="scala" /><category term="zio" /><category term="HFT" /><summary type="html">I recently started a contract to build a high-frequency trading bot. I’ll use this to document the experience, engineering workflow, daily work, exciting breakthroughs, difficult problems, etc.</summary></entry><entry><title type="html">Reimplementing ‘git clone’ with Scala / ZIO</title><link href="http://localhost:4000/reimplementing-git-clone-with-scala-zio" rel="alternate" type="text/html" title="Reimplementing ‘git clone’ with Scala / ZIO" /><published>2021-08-29T02:43:15-05:00</published><updated>2021-08-29T02:43:15-05:00</updated><id>http://localhost:4000/reimplementing-git-clone-with-scala-zio</id><content type="html" xml:base="http://localhost:4000/reimplementing-git-clone-with-scala-zio">&lt;p&gt;I’m reimplementing git clone in Scala based of &lt;a href=&quot;https://stefan.saasen.me/articles/git-clone-in-haskell-from-the-bottom-up&quot;&gt;this reimplementation in Haskell&lt;/a&gt;. My goals in order are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Get more comfortable in Scala and ZIO, particularly in functional-styled Scala&lt;/li&gt;
+  &lt;li&gt;Practice more formal / rigorous SWE ‘best practices’&lt;/li&gt;
+  &lt;li&gt;Develop a better understanding of the internals of git&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;SWE practices I’ll follow:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Write unit tests before writing code (kinda TDD, but really the development is driven by the original blog post)&lt;/li&gt;
   &lt;li&gt;Only function-level comments (no in-function comments)&lt;/li&gt;
@@ -7,7 +77,7 @@
   &lt;li&gt;Git commit often (no set rule, but after every function, major milestone, bug fix)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;I’ll break the project up into phases. Phase 1 is completing the following:&lt;/p&gt;
+&lt;p&gt;I’ll break the project up into phases. Phase 1 is to complete the following:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Parse the clone url to extract the host, port and repository path information.&lt;/li&gt;
@@ -21,7 +91,7 @@
 &lt;p&gt;Half way through, the post became overwhelming. I decided to skim for a high level overview for the rest, and focus on a deep understanding of &lt;a href=&quot;https://stefan.saasen.me/articles/git-clone-in-haskell-from-the-bottom-up/#git-transport-and-pack-wire-protocol&quot;&gt;git transport and pack wire protocal&lt;/a&gt; so that I can start implementing that part of it.&lt;/p&gt;
 
 &lt;h4 id=&quot;step-2-understand-first-requirement-and-build-one-test-for-it---ref-discovery&quot;&gt;Step 2: Understand first requirement, and build one test for it - Ref discovery&lt;/h4&gt;
-&lt;p&gt;This will complete step 1 - 3 of the git clone process&lt;/p&gt;
+&lt;p&gt;This will complete step 1 - 3 of the git clone process detailed in the original blog post&lt;/p&gt;
 
 &lt;h4 id=&quot;step-3-write-code-to-pass-test&quot;&gt;Step 3: Write code to pass test&lt;/h4&gt;
 &lt;p&gt;Done. I should probably write more tests for better coverage, but my goal is to get a working program quickly, not one that will be put in production / care about resiliency.&lt;/p&gt;
@@ -32,7 +102,26 @@
 &lt;h4 id=&quot;step-5-ls-remote-sends-a-message-over-tcp-ill-have-to-learn-a-bit-about-how-tcp-works-the-actor-model-etc&quot;&gt;Step 5: ls-remote sends a message over TCP. I’ll have to learn a bit about how TCP works, the actor model, etc.&lt;/h4&gt;
 &lt;p&gt;I’m reading about TCP / Akka actors on &lt;a href=&quot;https://stackoverflow.com/questions/33747858/akka-tcp-client-how-can-i-send-a-message-over-tcp-using-akka-actor&quot;&gt;stackoverflow&lt;/a&gt; and from the &lt;a href=&quot;https://doc.akka.io/docs/akka/snapshot/io-tcp.html?language=scala&quot;&gt;official docs&lt;/a&gt; to understand how I can send a TCP message in Scala. I think the ZIO environments I’ll need are System and maybe Blocking. I haven’t worked with either of these ZIO environments, so that’ll be fun to learn about!&lt;/p&gt;
 
-&lt;h4 id=&quot;step-6-write-test-for-ls-remote&quot;&gt;Step 6: Write test for ls-remote&lt;/h4&gt;</content><author><name></name></author><category term="ZIO" /><summary type="html">SWE practices I’ll follow: Write unit tests before writing code (kinda TDD, but really the development is driven by the original blog post) Only function-level comments (no in-function comments) Self-commenting code (will likely follow naming convensions from the Haskell implementation) Git commit often (no set rule, but after every function, major milestone, bug fix)</summary></entry><entry><title type="html">Tetris with Cats -&amp;gt; Snake with ZIO</title><link href="http://localhost:4000/ZIO-snake" rel="alternate" type="text/html" title="Tetris with Cats -&amp;gt; Snake with ZIO" /><published>2021-07-22T10:53:29-04:00</published><updated>2021-07-22T10:53:29-04:00</updated><id>http://localhost:4000/tetris-with-cats-to-snake-with-ZIO</id><content type="html" xml:base="http://localhost:4000/ZIO-snake">&lt;p&gt;&lt;img src=&quot;images/snake.gif&quot; alt=&quot;snake example gif&quot; /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;step-6-write-test-for-ls-remote&quot;&gt;Step 6: Write test for ls-remote&lt;/h4&gt;
+
+&lt;h4 id=&quot;step-7-breaking-down-ls-remote&quot;&gt;Step 7: Breaking down ls-remote&lt;/h4&gt;
+&lt;p&gt;I’m skipping the ls-remote test for now. I’m not quite sure yet how to write tests that depend on external services (like a local tcp / git server), let alone an network-dependent service. I was able to get a prototyped local version of ref discovery working with akka. AKA I can see the correct git info when I put up a local git server, and run my tcp client code. It’s not type-safe / functional / ZIO’d yet. It looks like there’s some ZIO socket info &lt;a href=&quot;https://zio.github.io/zio-nio/docs/essentials/essentials_sockets&quot;&gt;out there&lt;/a&gt;. I’m not sure if I’ll be able to use this, or be able to wrap my akka setup in ZIO. It seems like this is the bulk of ls-remote though.&lt;/p&gt;
+
+&lt;h4 id=&quot;step-8-getting-my-actor-to-receive-info-needed-for-lsremote&quot;&gt;Step 8: Getting my actor to receive info (needed for lsRemote)&lt;/h4&gt;
+&lt;p&gt;Before, I only had the actor ‘fire-and-forget’, so I wouldn’t get a response back. Now, lsRemote returns a Future, which is the return type of an ask. I’m still not super clear on the setup here. I’m not even sure how many actors I have, tbh, but something is working. I’ll have to dig deeper to really understand what’s going on here, and I’ll probably be able to prune the process from what it is now.&lt;/p&gt;
+
+&lt;h3 id=&quot;this-is-on-hold-because-i-took-a-contract-job-building-a-high-frequency-securities-trading-bot-in-scala-heres-some-notes-on-it&quot;&gt;This is on hold because I took a contract job building a high-frequency securities trading bot in Scala. Here’s some &lt;a href=&quot;https://aryzach.github.io/2021/09/10/getting-money-from-the-stock-market.html&quot;&gt;notes on it&lt;/a&gt;.&lt;/h3&gt;
+
+&lt;h4 id=&quot;step-8-trying-out-zio-socket-channel-in-place-of-the-akka-actors&quot;&gt;Step 8: Trying out ZIO socket channel in place of the Akka actors&lt;/h4&gt;
+&lt;p&gt;The HFT bot mentioned above is on hold, so I’m continuing with this project!&lt;/p&gt;
+
+&lt;p&gt;The akka actors I was using to handle the TCP messages to and from the git server weren’t quite working how I needed them to. I was following &lt;a href=&quot;https://hmn.stackfinder.net/questions/45992575/how-to-reuse-akka-tcp-connection-to-write-messages&quot;&gt;this example&lt;/a&gt;. I was sending an ‘ask’ to the TCP client actor from outside the client system. This is supposed to create a Future. The TCP client actor was receiving a response and the ‘info’ messages containted the correct response from the git server, but then that wasn’t being passed to the Future outside of the actor system. When I tried to send a message to the ‘sender()’ (what I thought would be the outside-the-actor-system caller), I was getting a ‘deadLetters’ actor issue. So I moved on for now.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://doc.akka.io/docs/akka/current/io-tcp.html&quot;&gt;This official TCP client example&lt;/a&gt;, needs a ‘replies’ / ‘listener’ of type ActorRef passed to it. My hangup was that I didn’t know what to pass here, and how to use it. There’s not many great docs / examples / blog posts on Akka actors, and if I go the actor route and figure this out, I might make some content.&lt;/p&gt;
+
+&lt;p&gt;When you send an ‘ask’ to an actor, you get back a Future. Because I’d like to use ZIO, the plan was to wrap the Future in a ‘ZIO.fromFuture’. Well, I was having trouble with the actor model, and I found this &lt;a href=&quot;https://zio.github.io/zio-nio/docs/essentials/essentials_sockets&quot;&gt;ZIO socket channel&lt;/a&gt;. I’m not sure if this will do what I want it to, namely connecting to the server, writing the request in packet line format to the socket, then reading the response from the socket. The source code has methods called ‘write’ and ‘read’, so I’m hoping I’m on the right track. So far, I’ve gotten it to compile, but the ‘write’ method I’m calling on &lt;a href=&quot;https://github.com/zio/zio-nio/blob/master/nio/src/main/scala/zio/nio/channels/AsynchronousChannel.scala&quot;&gt;AsynchronousSocketChannel&lt;/a&gt; doesn’t match the method call in the source code. Very suspicious!&lt;/p&gt;
+
+&lt;p&gt;I also made my first pull request to ZIO! It’s just a minor documentation fix! &lt;a href=&quot;https://github.com/zio/zio-nio/pull/410&quot;&gt;Here it is&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><category term="ZIO" /><summary type="html">I’m reimplementing git clone in Scala based of this reimplementation in Haskell. My goals in order are:</summary></entry><entry><title type="html">Tetris with Cats -&amp;gt; Snake with ZIO</title><link href="http://localhost:4000/ZIO-snake" rel="alternate" type="text/html" title="Tetris with Cats -&amp;gt; Snake with ZIO" /><published>2021-07-22T09:53:29-05:00</published><updated>2021-07-22T09:53:29-05:00</updated><id>http://localhost:4000/tetris-with-cats-to-snake-with-ZIO</id><content type="html" xml:base="http://localhost:4000/ZIO-snake">&lt;p&gt;&lt;img src=&quot;images/snake.gif&quot; alt=&quot;snake example gif&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;(&lt;a href=&quot;https://github.com/aryzach/snake-console-game-scala-ZIO&quot;&gt;git repo&lt;/a&gt;)
 (&lt;a href=&quot;https://github.com/lpld/simple-games&quot;&gt;original project that this is modified from&lt;/a&gt;)&lt;/p&gt;
@@ -124,7 +213,7 @@
 
 &lt;p&gt;I’m not sure if this is more or less efficient than doing an IO random call only when needed (when the snake ate food). I don’t know enough about how streams work. If any stream that can be precomputed precomputes with a lot of values, it might be more efficient than doing ‘random IO’ only when needed. Regardless, it probably doesn’t matter at all for this app, and it’s prematurely optimizing. But it’s fun to think about!&lt;/p&gt;
 
-&lt;p&gt;Now the game is largely feature complete. It’s not a full snake game, because it never ends and you never lose, but it’s all ported to ZIO, which was my main learning goal.&lt;/p&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Journey to ZIO</title><link href="http://localhost:4000/journey-to-zio" rel="alternate" type="text/html" title="Journey to ZIO" /><published>2021-07-08T11:35:05-04:00</published><updated>2021-07-08T11:35:05-04:00</updated><id>http://localhost:4000/journey-to-zio</id><content type="html" xml:base="http://localhost:4000/journey-to-zio">&lt;p&gt;I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m learning Scala and ZIO. Maybe it can be useful for somebody else wanting to learn.&lt;/p&gt;
+&lt;p&gt;Now the game is largely feature complete. It’s not a full snake game, because it never ends and you never lose, but it’s all ported to ZIO, which was my main learning goal.&lt;/p&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Journey to ZIO</title><link href="http://localhost:4000/journey-to-zio" rel="alternate" type="text/html" title="Journey to ZIO" /><published>2021-07-08T10:35:05-05:00</published><updated>2021-07-08T10:35:05-05:00</updated><id>http://localhost:4000/journey-to-zio</id><content type="html" xml:base="http://localhost:4000/journey-to-zio">&lt;p&gt;I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m learning Scala and ZIO. Maybe it can be useful for somebody else wanting to learn.&lt;/p&gt;
 
 &lt;h4 id=&quot;prior-experience--understanding&quot;&gt;Prior experience / understanding:&lt;/h4&gt;
 &lt;ul&gt;
@@ -160,7 +249,7 @@
   &lt;li&gt;General scala: &lt;a href=&quot;https://alvinalexander.com/&quot;&gt;Alvin Alexander&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;ZIO seems more like an ecosystem than a tooling library, similar to React (middle ground between a framework and a library). I could be totally off base here!&lt;/p&gt;</content><author><name></name></author><summary type="html">I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m learning Scala and ZIO. Maybe it can be useful for somebody else wanting to learn.</summary></entry><entry><title type="html">Smart Irrigation</title><link href="http://localhost:4000/smart-irrigation" rel="alternate" type="text/html" title="Smart Irrigation" /><published>2021-04-16T14:47:25-04:00</published><updated>2021-04-16T14:47:25-04:00</updated><id>http://localhost:4000/smart-irrigation</id><content type="html" xml:base="http://localhost:4000/smart-irrigation">&lt;p&gt;&lt;img src=&quot;images/valveModuleEnclosure.jpg&quot; alt=&quot;Valve module without valve&quot; style=&quot;transform:rotate(90deg); margin-bottom: -50px; margin-top: -50px;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;ZIO seems more like an ecosystem than a tooling library, similar to React (middle ground between a framework and a library). I could be totally off base here!&lt;/p&gt;</content><author><name></name></author><summary type="html">I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m learning Scala and ZIO. Maybe it can be useful for somebody else wanting to learn.</summary></entry><entry><title type="html">Smart Irrigation</title><link href="http://localhost:4000/smart-irrigation" rel="alternate" type="text/html" title="Smart Irrigation" /><published>2021-04-16T13:47:25-05:00</published><updated>2021-04-16T13:47:25-05:00</updated><id>http://localhost:4000/smart-irrigation</id><content type="html" xml:base="http://localhost:4000/smart-irrigation">&lt;p&gt;&lt;img src=&quot;images/valveModuleEnclosure.jpg&quot; alt=&quot;Valve module without valve&quot; style=&quot;transform:rotate(90deg); margin-bottom: -50px; margin-top: -50px;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;problem&quot;&gt;Problem&lt;/h3&gt;
 &lt;p&gt;The problem that we are facing is regularly irrigating roughly 40 - 100 acres with as little water, labor, and power possible. Currently, we have about 20 overhead sprinkler valves and 50 drip irrigation valves. It’s a roughly 5 - 15 minute round trip to change each sprinkler valve, which both takes time and interrupt other projects you may be working on. This translates to roughly four labor hours to irrigate 40 acres, and will take even more time when the rest of the property needs to be irrigated. The 50 drip irrigation valves are less of an issue right now because the valves are in a more central location.&lt;/p&gt;
@@ -398,7 +487,7 @@ python3 OTAserver.py &amp;amp;
 &lt;hr /&gt;
 &lt;h4 id=&quot;overall&quot;&gt;Overall&lt;/h4&gt;
 &lt;p&gt;The ideal hardware setup would be an SPDT relay on built-in Sonoff SV controlling a 3-wire ball valve, powered by a 5-10 watt solar panel and 3-4 lithium batteries or an appropriately-sized supercapacitor.
-The ideal software architeture would be native phone apps and a web app, with a data dashboard to view sensor data.&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"></summary></entry><entry><title type="html">Solar Powered Ranger</title><link href="http://localhost:4000/solar-powered-ranger" rel="alternate" type="text/html" title="Solar Powered Ranger" /><published>2021-04-16T14:47:25-04:00</published><updated>2021-04-16T14:47:25-04:00</updated><id>http://localhost:4000/solar-powered-ranger</id><content type="html" xml:base="http://localhost:4000/solar-powered-ranger">&lt;p&gt;&lt;img src=&quot;images/ranger.jpg&quot; alt=&quot;ranger&quot; /&gt;&lt;/p&gt;
+The ideal software architeture would be native phone apps and a web app, with a data dashboard to view sensor data.&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"></summary></entry><entry><title type="html">Solar Powered Ranger</title><link href="http://localhost:4000/solar-powered-ranger" rel="alternate" type="text/html" title="Solar Powered Ranger" /><published>2021-04-16T13:47:25-05:00</published><updated>2021-04-16T13:47:25-05:00</updated><id>http://localhost:4000/solar-powered-ranger</id><content type="html" xml:base="http://localhost:4000/solar-powered-ranger">&lt;p&gt;&lt;img src=&quot;images/ranger.jpg&quot; alt=&quot;ranger&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;I wanted to passively charge a &lt;a href=&quot;https://ranger.polaris.com/en-us/ranger-ev/&quot;&gt;Polaris Ranger EV&lt;/a&gt; from solar panels. Two 100 watt solar panels had been installed on top of the ranger. The ranger originally had lead-acid batteries. Running and charging lead-acid from solar is simple with a solar controller, but the ranger had already been converted to run off of a lithium battery, which meant it had a battery management system (BMS). Powering the BMS was the crux of this problem.&lt;/p&gt;
 

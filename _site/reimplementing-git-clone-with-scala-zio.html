@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Reimplementing Git Clone with Scala / ZIO</title>
+    <title>Reimplementing 'git clone' with Scala / ZIO</title>
     <link rel="stylesheet" href="/css/style.css">
   </head>
   <body>
@@ -21,8 +21,16 @@
   </a>
 </nav>
 
-    <h1>Reimplementing Git Clone with Scala / ZIO</h1>
+    <h1 class=postTitle>Reimplementing 'git clone' with Scala / ZIO</h1>
 <p>29 Aug 2021 </p>
+
+<p>I’m reimplementing git clone in Scala based of <a href="https://stefan.saasen.me/articles/git-clone-in-haskell-from-the-bottom-up">this reimplementation in Haskell</a>. My goals in order are:</p>
+
+<ol>
+  <li>Get more comfortable in Scala and ZIO, particularly in functional-styled Scala</li>
+  <li>Practice more formal / rigorous SWE ‘best practices’</li>
+  <li>Develop a better understanding of the internals of git</li>
+</ol>
 
 <p>SWE practices I’ll follow:</p>
 <ul>
@@ -32,7 +40,7 @@
   <li>Git commit often (no set rule, but after every function, major milestone, bug fix)</li>
 </ul>
 
-<p>I’ll break the project up into phases. Phase 1 is completing the following:</p>
+<p>I’ll break the project up into phases. Phase 1 is to complete the following:</p>
 
 <ol>
   <li>Parse the clone url to extract the host, port and repository path information.</li>
@@ -46,7 +54,7 @@
 <p>Half way through, the post became overwhelming. I decided to skim for a high level overview for the rest, and focus on a deep understanding of <a href="https://stefan.saasen.me/articles/git-clone-in-haskell-from-the-bottom-up/#git-transport-and-pack-wire-protocol">git transport and pack wire protocal</a> so that I can start implementing that part of it.</p>
 
 <h4 id="step-2-understand-first-requirement-and-build-one-test-for-it---ref-discovery">Step 2: Understand first requirement, and build one test for it - Ref discovery</h4>
-<p>This will complete step 1 - 3 of the git clone process</p>
+<p>This will complete step 1 - 3 of the git clone process detailed in the original blog post</p>
 
 <h4 id="step-3-write-code-to-pass-test">Step 3: Write code to pass test</h4>
 <p>Done. I should probably write more tests for better coverage, but my goal is to get a working program quickly, not one that will be put in production / care about resiliency.</p>
@@ -58,6 +66,26 @@
 <p>I’m reading about TCP / Akka actors on <a href="https://stackoverflow.com/questions/33747858/akka-tcp-client-how-can-i-send-a-message-over-tcp-using-akka-actor">stackoverflow</a> and from the <a href="https://doc.akka.io/docs/akka/snapshot/io-tcp.html?language=scala">official docs</a> to understand how I can send a TCP message in Scala. I think the ZIO environments I’ll need are System and maybe Blocking. I haven’t worked with either of these ZIO environments, so that’ll be fun to learn about!</p>
 
 <h4 id="step-6-write-test-for-ls-remote">Step 6: Write test for ls-remote</h4>
+
+<h4 id="step-7-breaking-down-ls-remote">Step 7: Breaking down ls-remote</h4>
+<p>I’m skipping the ls-remote test for now. I’m not quite sure yet how to write tests that depend on external services (like a local tcp / git server), let alone an network-dependent service. I was able to get a prototyped local version of ref discovery working with akka. AKA I can see the correct git info when I put up a local git server, and run my tcp client code. It’s not type-safe / functional / ZIO’d yet. It looks like there’s some ZIO socket info <a href="https://zio.github.io/zio-nio/docs/essentials/essentials_sockets">out there</a>. I’m not sure if I’ll be able to use this, or be able to wrap my akka setup in ZIO. It seems like this is the bulk of ls-remote though.</p>
+
+<h4 id="step-8-getting-my-actor-to-receive-info-needed-for-lsremote">Step 8: Getting my actor to receive info (needed for lsRemote)</h4>
+<p>Before, I only had the actor ‘fire-and-forget’, so I wouldn’t get a response back. Now, lsRemote returns a Future, which is the return type of an ask. I’m still not super clear on the setup here. I’m not even sure how many actors I have, tbh, but something is working. I’ll have to dig deeper to really understand what’s going on here, and I’ll probably be able to prune the process from what it is now.</p>
+
+<h3 id="this-is-on-hold-because-i-took-a-contract-job-building-a-high-frequency-securities-trading-bot-in-scala-heres-some-notes-on-it">This is on hold because I took a contract job building a high-frequency securities trading bot in Scala. Here’s some <a href="https://aryzach.github.io/2021/09/10/getting-money-from-the-stock-market.html">notes on it</a>.</h3>
+
+<h4 id="step-8-trying-out-zio-socket-channel-in-place-of-the-akka-actors">Step 8: Trying out ZIO socket channel in place of the Akka actors</h4>
+<p>The HFT bot mentioned above is on hold, so I’m continuing with this project!</p>
+
+<p>The akka actors I was using to handle the TCP messages to and from the git server weren’t quite working how I needed them to. I was following <a href="https://hmn.stackfinder.net/questions/45992575/how-to-reuse-akka-tcp-connection-to-write-messages">this example</a>. I was sending an ‘ask’ to the TCP client actor from outside the client system. This is supposed to create a Future. The TCP client actor was receiving a response and the ‘info’ messages containted the correct response from the git server, but then that wasn’t being passed to the Future outside of the actor system. When I tried to send a message to the ‘sender()’ (what I thought would be the outside-the-actor-system caller), I was getting a ‘deadLetters’ actor issue. So I moved on for now.</p>
+
+<p><a href="https://doc.akka.io/docs/akka/current/io-tcp.html">This official TCP client example</a>, needs a ‘replies’ / ‘listener’ of type ActorRef passed to it. My hangup was that I didn’t know what to pass here, and how to use it. There’s not many great docs / examples / blog posts on Akka actors, and if I go the actor route and figure this out, I might make some content.</p>
+
+<p>When you send an ‘ask’ to an actor, you get back a Future. Because I’d like to use ZIO, the plan was to wrap the Future in a ‘ZIO.fromFuture’. Well, I was having trouble with the actor model, and I found this <a href="https://zio.github.io/zio-nio/docs/essentials/essentials_sockets">ZIO socket channel</a>. I’m not sure if this will do what I want it to, namely connecting to the server, writing the request in packet line format to the socket, then reading the response from the socket. The source code has methods called ‘write’ and ‘read’, so I’m hoping I’m on the right track. So far, I’ve gotten it to compile, but the ‘write’ method I’m calling on <a href="https://github.com/zio/zio-nio/blob/master/nio/src/main/scala/zio/nio/channels/AsynchronousChannel.scala">AsynchronousSocketChannel</a> doesn’t match the method call in the source code. Very suspicious!</p>
+
+<p>I also made my first pull request to ZIO! It’s just a minor documentation fix! <a href="https://github.com/zio/zio-nio/pull/410">Here it is</a>.</p>
+
 
 
 

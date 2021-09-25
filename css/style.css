@@ -96,4 +96,6 @@ img {
 		width: 80%;
 }
 
-
+.postTitle {
+		line-height: 1.1em;
+}
