@@ -48,7 +48,7 @@ I'm skipping the ls-remote test for now. I'm not quite sure yet how to write tes
 #### Step 8: Getting my actor to receive info (needed for lsRemote)
 Before, I only had the actor 'fire-and-forget', so I wouldn't get a response back. Now, lsRemote returns a Future, which is the return type of an ask. I'm still not super clear on the setup here. I'm not even sure how many actors I have, tbh, but something is working. I'll have to dig deeper to really understand what's going on here, and I'll probably be able to prune the process from what it is now.
 
-### This is on hold because I took a contract job building a high-frequency securities trading bot in Scala. Here's some [notes on it](https://aryzach.github.io/2021/09/10/getting-money-from-the-stock-market.html).
+### This is on hold because I took a contract job building a high-frequency securities trading bot in Scala. Here are some [notes on it](https://aryzach.github.io/money).
 
 #### Step 8: Trying out ZIO socket channel in place of the Akka actors
 The HFT bot mentioned above is on hold, so I'm continuing with this project! 
@@ -61,3 +61,12 @@ When you send an 'ask' to an actor, you get back a Future. Because I'd like to u
 
 I also made my first pull request to ZIO! It's just a minor documentation fix! [Here it is](https://github.com/zio/zio-nio/pull/410).
 
+#### Step 9: TCP reflections
+When testing the akka TCP actor example, it seemed like overkill. I also didn't spend the time to get it to work fully. I pivoted away from Akka for two reasons:
+- It seemed like overkill. I'm sending one message and receiving one in response. My understanding of the main purpose of actors is to deal with concurrency (high volume and speed, and when there is possible coupling between parts of the system). They can be used for other purposes, but justs seemed like a lot of code for something I could do just as well with less abstraction
+- I read how ZIO and Akka solve similar problems in different ways. Because one goal is to gain familiarity with writing ZIO code and the ecosystem I decided to pursue that route. 
+I pivoted away from ZIO for two other reasons:
+- I don't really understand the use case, or what problem it's solving
+- To get the example running, I had to alter it and it differed from both the documented example and the source code
+
+The Akka actor model seems like the canonical way in Scala to send and recieve TCP messages, but also complicated and overkill. While I want to gain more familiarity with the actor abstraction, how to use it, and understand what problems it solves, I want to move quicker through building this app. For now, I'm just going to use [Java sockets from this example](https://www.py4u.net/discuss/21492) to build from. 
