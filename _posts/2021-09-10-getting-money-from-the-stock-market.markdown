@@ -44,12 +44,12 @@ This will just be a show that the APIs are working and can be plumbed together. 
 I started with this project before I started writing this post, and up til now, I've been very sloppy with code and git. There have been many false starts as I deal with testing unsupported, open source IB client libraries. I've settled on a IB client wrapper, and have tested part of the API, so am confident that I can get something working with Scala now without having to use the native Java TWS API. I'm now at a place where I'll use better SWE practices. I'll keep a more detailed to-do list in the project git repo, but here I'll overview status of features and bugs. I'll start writing tests and practice some TDD after I've delivered the MVP.
 
 Currently, I have:
-	- connect as a client to IB
-	- create a contract
-	- receive historical data
+- connect as a client to IB
+- create a contract
+- receive historical data
 
 Next steps:
-	- make a buy and test
+- make a buy and test
 
 ### Post 2
 When the markets are down I can't fully test my code. So I decided improve my workflow today instead. My dev environment quickly got out of hand and I was requiring too many terminal windows. I've used tmux before but it's not second nature. I decided to use it to manage my workflow better. I created [tmux startup script](https://github.com/aryzach/dotfiles/blob/master/tmux-dev) to streamline the process, and it's already really paying off. Would highly recommend!
@@ -67,4 +67,4 @@ The plumbing API is finished. Now Trading MVP.
 - get OBV from historical data 
 - make a smarter buy / sell / hold decision from OBV info
 
-### Project is on hold
+### Project is on hold 
