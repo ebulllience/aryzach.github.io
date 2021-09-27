@@ -1,36 +1,17 @@
-<HTML>
-	<HEAD>
-		<style>
-		p {
-		    margin-top: 10px;
-		      margin-bottom: 10px;
-		        margin-right: 350px;
-			  margin-left: 350px;
-		  		display: flex;
-				  justify-content: space-around;
-		  	}
-		</style>
+---
+layout: post
+title:  "Class and Book Reviews"
+date:   2020-03-16 11:47:25 -0700
+categories: class book review
+permalink: class-and-book-reviews
+---
 
-<TITLE> Class and Book Reviews </TITLE>
-</HEAD>
-<BODY>
-	<A HREF="index.html" >home </A>
+This is a chronological listing and description of all resources I've used to learn STEM related things. Most of them are computer science and math resources. The resources include college classes, online MOOC-like classes, and books. It's noted if I audited the class. None of the online courses were for credit, so you could say I audited those, too. I do all the exercises and projects included in the class or book listed, expect for some exceptions where noted. Most of the online classes I take come from an online computer science curriculum that tries to mimic a university CS degree equivalent. The classes are all free and largely project-based. I've really enjoyed the curriculum so far and highly recommend most of it. Here's the link: [OSSU (Open Source Society University](https://github.com/ossu/computer-science)
 
-	<p>
-	This is a chronological listing and description of all resources I've used to learn STEM related things. Most of them are computer science and math resources. The resources include college classes, online MOOC-like classes, and books. It's noted if I audited the class. None of the online courses were for credit, so you could say I audited those, too. I do all the exercises and projects included in the class or book listed, expect for some exceptions where noted. Most of the online classes I take come from an online computer science curriculum that tries to mimic a university CS degree equivalent. The classes are all free and largely project-based. I've really enjoyed the curriculum so far and highly recommend most of it. Here's the link:
-	</p><p>
-	<a href="https://github.com/ossu/computer-science"> OSSU (Open Source Society University) </a> 
-	</p>
 
-	<hr>
-	<hr>
-	<center>
-
-	<b>Computer Science</b>
-	<br>
-	<a href="#Introduction to programming (CS 50)">Introduction to programming (CS 50)</a>
-	<br>
-	<a href="#Introduction to programming (python)">Intro to programming (python)</a>
+### Computer Science
+[CS 50](#cs-50)
+[Introduction to programming](#introduction-to-programming)
         <br>
 	<a href="#How to Design Programs">How to Design Programs</a>
         <br>
@@ -96,7 +77,7 @@
 	<hr>
 	<hr>
 
-	<a name="Introduction to programming (CS 50)"></a>
+### CS 50
 	<center>	
 		<h3>Introduction to programming (online, edX) - 2017</h3> 
 		<a href="https://docs.cs50.net/2017/fall/syllabus/cs50.html"> 2017 syllabus </a>
@@ -699,8 +680,4 @@ Originally, I was so motivated that I’d finish this 3-month, 8 project course 
 							</p>
 
 
-							<br>
-							<br>
 
-</BODY>
-</HTML>
