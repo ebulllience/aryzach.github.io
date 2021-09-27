@@ -2,7 +2,7 @@
 layout: post
 title:  "Smart Irrigation"
 date:   2021-04-16 11:47:25 -0700
-categories: jekyll update
+categories: hard tech product design 
 permalink: smart-irrigation 
 ---
 

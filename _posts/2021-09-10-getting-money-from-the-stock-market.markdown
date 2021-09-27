@@ -8,6 +8,13 @@ permalink: money
 
 I recently started a contract to build a high-frequency trading bot. I'll use this to document the experience, engineering workflow, daily work, exciting breakthroughs, difficult problems, etc.
 
+<img src="images/tradingBotArchitecture.jpeg"
+     alt="proposed architecture"
+		 />
+	
+Proposed software architecture
+
+
 ### Background
 Somebody saw I had some hobby Haskell experience, so he contacted me about building a high-frequency securities trading bot in a functional language. He currently has an implementation in python that he built with a small team over the last 2 - 3 years. It's a well-built code base, but ran into speed issues, so couldn't compete in the markets. He said they've tried to speed up the processes using asyncIO and PyPy, but that it hasn't been fruitful. The idea is to build it with a functional language because they better handle concurrency, and are just generally much faster compiled languages. 
 
