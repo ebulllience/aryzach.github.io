@@ -40,4 +40,16 @@ Other reason for this is baby boomers in 10 - 30 years will all be here. Nursing
 Don't know how to pursue this. Where my energy should go. What first steps are. 
 Step 1: Does anything like this exist or has it existed in the past and if so what does it look like, and what is it missing. Because if it does exist, it's clearly missing something because the culture and mindset around this is not where lots of people think it should be. Or they just aren't doing it enought. With baby boomers, if there's a time to be thinking about it, it's not and in the next 10 - 30 years.
 
-
+Main value areas:
+Raising awareness through advocacy and education
+Creating the legal and business pathways 
+Guiding people through the process both mentally and emotionally (they can void the plan at anytime)
+Could have a support group for people. Or just a community of people who are planning DAS
+Making family part of the planning process
+Creating a clear roadmap for people, and helping them / reminding them along the way:
+ 
+1. Talking to somebody to help you think about your options, and what the options mean for you (how to prepare for this emotionally and mentally)
+2. Help get plan / legal paperwork in order
+3. Check ins 
+4. Evaluation (patient / client can refute results at anytime and void or delay plan)
+5. DAS and family support

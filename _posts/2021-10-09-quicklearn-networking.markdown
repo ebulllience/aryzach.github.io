@@ -25,6 +25,7 @@ Here I'm going to make a stream of consciousness post about what I learn as I qu
 3. and is very honest about what she knows and doesn't, which makes it both approachable to learn from, and feels more like I'm learning this with a friend
 4. and I'm in a time crunch and they're generally short posts
 5. and I don't have a specific end goal yet, and this covers lots of topics in a non-abstract way
+6. and I want to have seen a lot of problems and solutions / tools before, so when I come across something similar, I know where to look
 
 At work, all I know so far is that we have to setup a physical firewall, and that we can't get a VPN (currently Nord VPN) to work. And that these two combined are likely to cause more issues. This is my third day!
 
@@ -83,4 +84,7 @@ I'll research these more throughouly if the jvns posts don't cover them.
 - The socket man page was also helpful here. I didn't know sockets had buffers before this, and that they are file descriptors (currently learning about fd in the OS book mentioned above)
 
 ### [What's interesting about UDP?](https://jvns.ca/blog/2016/12/21/what-s-interesting-about-udp/)
+- DNS uses UDP, mostly because DNS requests are small, so no need for multiple packets. Application side handles retransmission if there's no reply. Large DNS responses may still use TCP
 
+### [Dissecting an SSL certificate](https://jvns.ca/blog/2017/01/31/whats-tls/)
+- I have SSL certs on my computer at /etc/ssl/certs/
