@@ -88,3 +88,58 @@ I'll research these more throughouly if the jvns posts don't cover them.
 
 ### [Dissecting an SSL certificate](https://jvns.ca/blog/2017/01/31/whats-tls/)
 - I have SSL certs on my computer at /etc/ssl/certs/
+
+### [How big can a packet get?](https://jvns.ca/blog/2017/02/07/mtu/)
+- UDP packet size can be really big, but Ethernet frame sizes are smaller, which is called MTU. So if you send a UDP packet bigger than the MTU, either it's dropped or it's fragmented (like TCP). Unclear how it's reassembled on other side, especially if some get dropped
+
+### [Slow down your internet with tc](https://jvns.ca/blog/2017/04/01/slow-down-your-internet-with-tc/)
+- you can add network latency (on a specific network interface)
+- HTTPS/2 can be much faster than HTTP because it does more requests in parallel, even though it has the added TLS handshake
+- questions: Does SSH use TCP? Or is SSH it's own protocal in the same axis as TCP?
+
+### [netdev conference, day 1](https://jvns.ca/blog/2017/04/06/netdev-2-1/)
+- one way to do DDOS mitigation: 
+1. sample packets, and send those samples elsewhere to find patterns on them (unsupervised machine learning?)
+2. come up with rules from those patterns, and code the rules
+3. to actually block use:
+ * iptables. I didn't know what this is, but turns out is has a lot to do with firewalls! (which is what I need to know about this week). From the man pages:
+ 	- iptables seems like a flowchart, and if packets match a certain pattern, then you send it down that flowchart branch
+	- at each node, the packet can be ACCEPT, DROP, or RETURN. RETURN just goes to the next pattern to match against (this could be wrong)
+	- there are 5 tables. Kernal settings determine which one(s) are active
+ * userspace (not sure of upsides or pitfalls)
+ * XDP which sounds like it's a new thing to do packet filtering right off of the network card. This way you avoid the kernel and userspace apparently. Good for very fast filtering 
+- using XDP at facebook for load balancing and DDOS mitigation. I don't really get load balancing (I can vaguely infer!)
+- you can use tc on a router to ratelimit from a certain MAC address
+- you can use tc on a router to do what the kernal would normally do with packets, like checksum. This could take load off the end CPU and put it on the router
+- a 'page' is a segment of memory for an OS. I think a process has virtual memory which is a page
+
+### [How to filter packets super fast: XDP & eBPF!](https://jvns.ca/blog/2017/04/07/xdp-bpf-tutorial/)
+- XDP programs use data structures from the kernal (which I remember being an uncommon thing to do, or impossible from userspace) to parse the Ethernet header
+- they loaded the compiled file into the kernal from userspace somehow (I think)
+- you can check if it loaded by looking at info about network interfaces. I can check it by running `ip link list`. When I run this I notice `mtu` on all interfaces, which is probably Maximum Transmission Unit. XDP is running on that interface if it says `xdp`
+
+## I'm going to skip netdev conf day 2 and 3 for now. Mostly because this is a reach for Julia, somebody who's familiar with networking, so it's an extra reach for me, and more of a depth than breath approach on these niche topics.
+
+### [Iptables basics](https://jvns.ca/blog/2017/06/07/iptables-basics/)
+- I'm excited about this because this relates to firewalls, which I'm trying to learn more about
+- cool visual to [iptables flowchart](https://images.app.goo.gl/K9oFPe5jjF3kyTh96)
+- I can look at the iptable rules with `sudo iptables -L -t nat` (replace nat with any other table)
+- SNAT and MASQUERADE: I think is so when you send / receive packets outside your LAN, the firewall uses it's IP address and when packets come in, somehow it knows which LAN IP to send it to. When sending / receiving packets on WAN, it looks like they're all coming from the same IP even though you might have many IPs on your LAN. Then how does your firewall / router know which IP to send to? The WAN packets must have your LAP IP, or just some sort of ID that your router / firewall maps to your LAN IP
+
+### [What's a network interface?](https://jvns.ca/blog/2017/09/03/network-interfaces/)
+- you can create a network namespace (what does this have to do with userspace? just coincidentally similar name?)
+- a network namespace is a copy of the network stack. It has it's own routes, firewall rules, and network devices
+- `nc -l 8000` will just create a server(?) that listens on port 8000
+- by default, ifconfig only shows active (up) interfaces
+- I created a new network namespace and connected it to a network interface. But now I seem stuck inside that network namespace. Is this nested under the default network namespace? Or parallel to it? When I rebooted it disappeared and seem to be in the default network namespace 
+- when sending a packet to an IP address, the route table decides which interface the packet goes through. Then if you're running tcpdump, this is where it reads from (once attached to interface)
+
+### [Finding out if/why a server is dropping packets](https://jvns.ca/blog/2017/09/05/finding-out-where-packets-are-being-dropped/)
+- `netstat -i` reports the MTU of each interface. `lo` reports MTU size of a UDP packet max size, which I though was weird because I thought the MTU for any network connection was 1500 limited by the Ethernet protocal. Turns out `lo` is for local (on your own computer) networking
+
+### [A few things I've learned about computer networking](https://jvns.ca/blog/2018/03/05/things-ive-learned-networking/)
+- this post was useful to understand how somebody else has come to understand computer networking and make me feel less bad about not knowing much about it. This exercise of going through Julia's networking posts has been super useful for building a framework, but I'm sure it helps a ton that I've had experience running into networking problems head on (even if I didn't have any framework to understand how to solve them). I had one technical co-worker and they would guide me in the right direction 
+- in reading a seperate post about building a tcp stack in python (building and sending SYN and ACK messages), it says you can tell your router to route packets addressed to a random IP to your computer (via your MAC address). This is so you can bypass your kernals TCP stack if your building your own application level TCP stack. And in the post it says that you computer will receive those packets meant for the random IP (but routed to your computer from the router). And supposedly your application will receive them. My question is how they get to the port? Why isn't the kernal rejecting them? Maybe LAN routing is done with MAC regardless. So the kernal doesn't process the packet because it's a different IP, but since MAC takes priority here, the packet still gets digested by the port / application TCP stack.
+- I can use tcpdump to see packets dropped from iptables. This might be useful when dubugging the firewall / VPN issue at work! (is a deep dive on working with tcpdump in my horizon? I've know about it for a few years but never really had to work with it)
+
+
