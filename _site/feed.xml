@@ -1,5 +1,230 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-09-27T19:09:59-05:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
-</subtitle><entry><title type="html">Getting money from the stock market</title><link href="http://localhost:4000/money" rel="alternate" type="text/html" title="Getting money from the stock market" /><published>2021-09-10T01:31:40-05:00</published><updated>2021-09-10T01:31:40-05:00</updated><id>http://localhost:4000/getting-money-from-the-stock-market</id><content type="html" xml:base="http://localhost:4000/money">&lt;p&gt;I recently started a contract to build a high-frequency trading bot. I’ll use this to document the experience, engineering workflow, daily work, exciting breakthroughs, difficult problems, etc.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-10-10T18:43:32-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Zach Blog</title><subtitle>Zach Blog Engineering Functional Programming Types Management Robotics
+</subtitle><entry><title type="html">Quicklearn Networking</title><link href="http://localhost:4000/quicklearn-networking" rel="alternate" type="text/html" title="Quicklearn Networking" /><published>2021-10-09T12:31:26-07:00</published><updated>2021-10-09T12:31:26-07:00</updated><id>http://localhost:4000/quicklearn-networking</id><content type="html" xml:base="http://localhost:4000/quicklearn-networking">&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+&lt;p&gt;I just started a new job! We mostly work with &lt;a href=&quot;https://en.wikipedia.org/wiki/Wireless_ad_hoc_network&quot;&gt;MANET networks&lt;/a&gt;. These are wireless networks with non-stationary and unreliable nodes. There are generally no dedicated routers, and all devices are both clients and participate in routing.&lt;/p&gt;
+
+&lt;p&gt;Anyway, because this is government contract work, we need to jump through lots of hoops to get certified with some security protocols including network security. The company is just three full-time people, one of those is me, and I probably have the most experience with networks and security, which isn’t much! (besides the two days / week contractor who seems very smart and capable)&lt;/p&gt;
+
+&lt;p&gt;So short story, I need to get more familiar with networks. Both for app development and our internal IT.&lt;/p&gt;
+
+&lt;p&gt;Side note: for our internal IT required security, there are a few resources we should tap into before trying to do this in-house:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;People have had to set up and follow these specific security requirements before. There are probably people we could hire with very deep domain expertise on how to set this up. Likely experts who have worked with companies of similar size before, too&lt;/li&gt;
+  &lt;li&gt;The owners are part of a government incubator group, and they talk to the other companies. We could consult with them how they set up their systems for compliance. Setting up closed-source networking systems meant for large institutions seems daunting and like you can’t solve the problems from first principles.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In the past, I’ve set up what is essentially a home network on steroids, with mesh WiFi over 130 acres, VLANs, a VPN, multiple ISPs, wireless Ethernet connections, etc. I’ve also worked in government cybersecurity for a short contract. That said, I still don’t have a solid grasp of networking and security, and have a lot of knowledge gaps.&lt;/p&gt;
+
+&lt;p&gt;Here I’m going to make a stream of consciousness post about what I learn as I quickly read through &lt;a href=&quot;https://jvns.ca/#computer-networking&quot;&gt;Julia Evans computer networking posts&lt;/a&gt;. I’m choosing to learn this way because she&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;is an excellent writer&lt;/li&gt;
+  &lt;li&gt;uses both concrete practical examples (with tooling demos) and explains some theory&lt;/li&gt;
+  &lt;li&gt;is very honest about what she knows and doesn’t, which makes it both approachable to learn from, and feels more like I’m learning this with a friend&lt;/li&gt;
+  &lt;li&gt;I’m in a time crunch and they’re generally short posts&lt;/li&gt;
+  &lt;li&gt;I don’t have a specific end goal yet, and this covers lots of topics in a non-abstract way&lt;/li&gt;
+  &lt;li&gt;I want to have seen a lot of problems and solutions / tools before, so when I come across something similar, I know where to look&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;At work, all I know so far is that we have to setup a physical firewall, and that we can’t get a VPN (currently NordVPN) to work. And that these two combined are likely to cause more issues. This is my third day!&lt;/p&gt;
+
+&lt;h2 id=&quot;current-questions&quot;&gt;Current questions&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Why do we need a physical firewall?&lt;/li&gt;
+  &lt;li&gt;How is this different from other firewalls?&lt;/li&gt;
+  &lt;li&gt;What do firewalls do, more specifically?&lt;/li&gt;
+  &lt;li&gt;Do most home networks have firewalls?&lt;/li&gt;
+  &lt;li&gt;How do firewalls interact with a VPN?&lt;/li&gt;
+  &lt;li&gt;Why do we need a VPN for security?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I’ll research these more thoroughly if the blog posts I’m reading don’t cover them.&lt;/p&gt;
+
+&lt;h3 id=&quot;from-firewall-wiki&quot;&gt;From firewall wiki:&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Seemingly three types:
+    &lt;ul&gt;
+      &lt;li&gt;software run on general purpose hardware&lt;/li&gt;
+      &lt;li&gt;hardware-based (what does this mean?!)&lt;/li&gt;
+      &lt;li&gt;virtual (maybe this is data that goes between a VM and native OS?)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Firewalls can be on a general purpose user computer and might be part of the operating system to handle incoming network packets&lt;/li&gt;
+  &lt;li&gt;A packet filter is a basic firewall. It inspects packets and does one of three things:
+    &lt;ul&gt;
+      &lt;li&gt;silent discard&lt;/li&gt;
+      &lt;li&gt;discard with ICMP (protocol for network devices (generally not end user devices), which can, I think, send a message back to the sender say it discarded the packet) or TCP reset (which is part of the TCP protocol, telling the sender to stop sending TCP messages)&lt;/li&gt;
+      &lt;li&gt;forward packet to next hop&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;A packet filter can decide what to do based on info in the headers (source and destination IPs, protocol used, and ports)&lt;/li&gt;
+  &lt;li&gt;There are also application-level firewalls called socket filters&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;post-summaries&quot;&gt;Post summaries&lt;/h2&gt;
+
+&lt;h3 id=&quot;cdns-arent-just-for-caching&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2016/04/29/cdns-arent-just-for-caching/&quot;&gt;CDNs aren’t just for caching&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;A content delivery network (CDN) can cache. It sounds like the main use case is having multiple servers around the world hosting your website to shorten time required on the network to reach them. They have other uses, too, like:
+    &lt;ul&gt;
+      &lt;li&gt;speed up TLS / SSL (which I don’t know much about, but is a security protocol that requires a lot of back and forth between client and server)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;what-are-ssl-ciphers--session-keys&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2016/05/06/what-are-ssl-ciphers-and-session-keys/&quot;&gt;What are SSL ciphers &amp;amp; session keys?&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;RSA is a way to encrypt, but is very slow. Instead, we (SSL / TLS) use other encryption for messages called AES. Maybe we only use RSA to encrypt the keys, so that we only do the slow process once in a session, instead of for every message. This might be wrong!&lt;/li&gt;
+  &lt;li&gt;When reading more about SSL / TLS:
+    &lt;ul&gt;
+      &lt;li&gt;Two goals: confidentiality - nobody else reads our messages, and integrity - both parties want to ensure the message is coming from who they think it is&lt;/li&gt;
+      &lt;li&gt;symmetric means both sides have the same key, which is needed for the two goals above&lt;/li&gt;
+      &lt;li&gt;asymmetric means the sides have different private keys. To do this they need to agree on a method for generating private keys.&lt;/li&gt;
+      &lt;li&gt;in addition to the two goals, we also have to prevent an attacker resending a message twice. To do this, you need a new set of symmetric keys for each message.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;why-do-we-use-the-linux-kernels-tcp-stack&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2016/06/30/why-do-we-use-the-linux-kernels-tcp-stack/&quot;&gt;Why do we use the Linux kernel’s TCP stack?&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;the kernel has it’s own TCP stack that is generally used. You could also write your own TCP stack in ‘userspace’. I’ve wrote software to send TCP messages before. Was I doing this in ‘userspace’? My OS knowledge is also filled with holes (so I’ve been reading through &lt;a href=&quot;https://pdos.csail.mit.edu/6.828/2019/xv6/book-riscv-rev0.pdf&quot;&gt;this short OS book&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;it seems like a roll-your-own TCP stack can be faster because you have direct control how it runs. You can pick a CPU and just run it through. When dealing with the built-in kernel TCP stack, the OS can decide to run other processes concurrently, which means holding up the TCP process. I’m not sure if this is correct!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;how-do-http-requests-get-sent-to-the-right-place&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2016/07/14/whats-sni/&quot;&gt;How do HTTP requests get sent to the right place?&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;I’m learning how to make an HTTP request without curl using netcat (or nc). First you have to manually build the HTTP headers, then nc sends it as a TCP message to the specified IP and port (I think!)&lt;/li&gt;
+  &lt;li&gt;A web server can host many websites, and uses HTTP headers to decide which one to route it to&lt;/li&gt;
+  &lt;li&gt;NGINX and Apache are two different web servers (I kinda knew this, but have never set them up, and didn’t know what nginx was)&lt;/li&gt;
+  &lt;li&gt;If web server hosts many different IPs / websites, and you have a single TCP connection, you can use the same SSL certificate for HTTP requests even if they are for different websites&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;why-do-udp-packets-get-dropped&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2016/08/24/find-out-where-youre-dropping-packets/&quot;&gt;Why do UDP packets get dropped?&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Server network card isn’t keeping up with the sending socket buffer&lt;/li&gt;
+  &lt;li&gt;Normal dropped packets over the network (which is likely due to full router buffers)&lt;/li&gt;
+  &lt;li&gt;Client application not ingesting from the receiving socket buffer fast enough&lt;/li&gt;
+  &lt;li&gt;The socket man page was also helpful here. I didn’t know sockets had buffers before this, and that they are file descriptors (currently learning about fd in the OS book mentioned above)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;whats-interesting-about-udp&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2016/12/21/what-s-interesting-about-udp/&quot;&gt;What’s interesting about UDP?&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;DNS uses UDP, mostly because DNS requests are small, so no need for multiple packets. Application side handles retransmission if there’s no reply. Large DNS responses may still use TCP&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;dissecting-an-ssl-certificate&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2017/01/31/whats-tls/&quot;&gt;Dissecting an SSL certificate&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;I have SSL certs on my computer at /etc/ssl/certs/&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;how-big-can-a-packet-get&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2017/02/07/mtu/&quot;&gt;How big can a packet get?&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;UDP packet size can be really big, but Ethernet frame sizes are smaller, which is called MTU. So if you send a UDP packet bigger than the MTU, either it’s dropped or it’s fragmented (like TCP). Unclear how it’s reassembled on other side, especially if some get dropped&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;slow-down-your-internet-with-tc&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2017/04/01/slow-down-your-internet-with-tc/&quot;&gt;Slow down your internet with tc&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;you can add network latency (on a specific network interface)&lt;/li&gt;
+  &lt;li&gt;HTTPS/2 can be much faster than HTTP because it does more requests in parallel, even though it has the added TLS handshake&lt;/li&gt;
+  &lt;li&gt;questions: Does SSH use TCP? Or is SSH it’s own protocol in the same axis as TCP?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;netdev-conference-day-1&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2017/04/06/netdev-2-1/&quot;&gt;netdev conference, day 1&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;one way to do DDOS mitigation:
+    &lt;ol&gt;
+      &lt;li&gt;sample packets, and send those samples elsewhere to find patterns on them (unsupervised machine learning?)&lt;/li&gt;
+      &lt;li&gt;come up with rules from those patterns, and code the rules&lt;/li&gt;
+      &lt;li&gt;to actually block use:&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;iptables. I didn’t know what this is, but turns out is has a lot to do with firewalls! (which is what I need to know about this week). From the man pages:
+ 	- iptables seems like a flowchart, and if packets match a certain pattern, then you send it down that flowchart branch
+    &lt;ul&gt;
+      &lt;li&gt;at each node, the packet can be ACCEPT, DROP, or RETURN. RETURN just goes to the next pattern to match against (this could be wrong)&lt;/li&gt;
+      &lt;li&gt;there are 5 tables. Kernel settings determine which one(s) are active&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;userspace (not sure of upsides or pitfalls)&lt;/li&gt;
+  &lt;li&gt;XDP which sounds like it’s a new thing to do packet filtering right off of the network card. This way you avoid the kernel and userspace apparently. Good for very fast filtering&lt;/li&gt;
+  &lt;li&gt;using XDP at Facebook for load balancing and DDOS mitigation. I don’t really get load balancing (I can vaguely infer!)&lt;/li&gt;
+  &lt;li&gt;you can use tc on a router to rate limit from a certain MAC address&lt;/li&gt;
+  &lt;li&gt;you can use tc on a router to do what the kernel would normally do with packets, like checksum. This could take load off the end CPU and put it on the router&lt;/li&gt;
+  &lt;li&gt;a ‘page’ is a segment of memory for an OS. I think a process has virtual memory which is a page&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;how-to-filter-packets-super-fast-xdp--ebpf&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2017/04/07/xdp-bpf-tutorial/&quot;&gt;How to filter packets super fast: XDP &amp;amp; eBPF!&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;XDP programs use data structures from the kernel (which I remember being an uncommon thing to do, or impossible from userspace) to parse the Ethernet header&lt;/li&gt;
+  &lt;li&gt;they loaded the compiled file into the kernel from userspace somehow (I think)&lt;/li&gt;
+  &lt;li&gt;you can check if it loaded by looking at info about network interfaces. I can check it by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ip link list&lt;/code&gt;. When I run this I notice &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mtu&lt;/code&gt; on all interfaces, which is probably Maximum Transmission Unit. XDP is running on that interface if it says &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xdp&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;im-going-to-skip-netdev-conf-day-2-and-3-for-now-mostly-because-this-is-a-reach-for-julia-somebody-whos-familiar-with-networking-so-its-an-extra-reach-for-me-and-more-of-a-depth-than-breath-approach-on-these-niche-topics&quot;&gt;I’m going to skip netdev conf day 2 and 3 for now. Mostly because this is a reach for Julia, somebody who’s familiar with networking, so it’s an extra reach for me, and more of a depth than breath approach on these niche topics.&lt;/h4&gt;
+
+&lt;h3 id=&quot;iptables-basics&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2017/06/07/iptables-basics/&quot;&gt;Iptables basics&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;I’m excited about this because this relates to firewalls, which I’m trying to learn more about&lt;/li&gt;
+  &lt;li&gt;cool visual to &lt;a href=&quot;https://images.app.goo.gl/K9oFPe5jjF3kyTh96&quot;&gt;iptables flowchart&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;I can look at the iptable rules with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo iptables -L -t nat&lt;/code&gt; (replace nat with any other table)&lt;/li&gt;
+  &lt;li&gt;SNAT and MASQUERADE: I think is so when you send / receive packets outside your LAN, the firewall uses it’s IP address and when packets come in, somehow it knows which LAN IP to send it to. When sending / receiving packets on WAN, it looks like they’re all coming from the same IP even though you might have many IPs on your LAN. Then how does your firewall / router know which IP to send to? The WAN packets must have your LAP IP, or just some sort of ID that your router / firewall maps to your LAN IP&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;whats-a-network-interface&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2017/09/03/network-interfaces/&quot;&gt;What’s a network interface?&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;you can create a network namespace (what does this have to do with userspace? just coincidentally similar name?)&lt;/li&gt;
+  &lt;li&gt;a network namespace is a copy of the network stack. It has it’s own routes, firewall rules, and network devices&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nc -l 8000&lt;/code&gt; will just create a server(?) that listens on port 8000&lt;/li&gt;
+  &lt;li&gt;by default, ifconfig only shows active (up) interfaces&lt;/li&gt;
+  &lt;li&gt;I created a new network namespace and connected it to a network interface. But now I seem stuck inside that network namespace. Is this nested under the default network namespace? Or parallel to it? When I rebooted it disappeared and seem to be in the default network namespace&lt;/li&gt;
+  &lt;li&gt;when sending a packet to an IP address, the route table decides which interface the packet goes through. Then if you’re running tcpdump, this is where it reads from (once attached to interface)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;finding-out-ifwhy-a-server-is-dropping-packets&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2017/09/05/finding-out-where-packets-are-being-dropped/&quot;&gt;Finding out if/why a server is dropping packets&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;netstat -i&lt;/code&gt; reports the MTU of each interface. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lo&lt;/code&gt; reports MTU size of a UDP packet max size, which I though was weird because I thought the MTU for any network connection was 1500 limited by the Ethernet protocol. Turns out &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lo&lt;/code&gt; is for local (on your own computer) networking&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;a-few-things-ive-learned-about-computer-networking&quot;&gt;&lt;a href=&quot;https://jvns.ca/blog/2018/03/05/things-ive-learned-networking/&quot;&gt;A few things I’ve learned about computer networking&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;this post was useful to understand how somebody else has come to understand computer networking and make me feel less bad about not knowing much about it. This exercise of going through Julia’s networking posts has been super useful for building a framework, but I’m sure it helps a ton that I’ve had experience running into networking problems head on (even if I didn’t have any framework to understand how to solve them). I had one technical co-worker and they would guide me in the right direction&lt;/li&gt;
+  &lt;li&gt;in reading a separate post about building a tcp stack in python (building and sending SYN and ACK messages), it says you can tell your router to route packets addressed to a random IP to your computer (via your MAC address). This is so you can bypass your kernels TCP stack if your building your own application level TCP stack. And in the post it says that you computer will receive those packets meant for the random IP (but routed to your computer from the router). And supposedly your application will receive them. My question is how they get to the port? Why isn’t the kernel rejecting them? Maybe LAN routing is done with MAC regardless. So the kernel doesn’t process the packet because it’s a different IP, but since MAC takes priority here, the packet still gets digested by the port / application TCP stack.&lt;/li&gt;
+  &lt;li&gt;I can use tcpdump to see packets dropped from iptables. This might be useful when debugging the firewall / VPN issue at work! (is a deep dive on working with tcpdump in my horizon? I’ve know about it for a few years but never really had to work with it)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;reflections-update&quot;&gt;Reflections update:&lt;/h3&gt;
+&lt;p&gt;I’m part way through, and I already feel like I’ve learned a ton, especially in my quest to have a framework to understand some of the questions I posted in the beginning. I’ll kinda answer them now&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Why do we need a physical firewall?
+    &lt;ul&gt;
+      &lt;li&gt;my guess would be to have hardware to do firewall stuff faster and maybe have software like XDP. It might also be a closed-source, no root access / no OS, government thing to both have a physical separate device before your router / modem, and so that there’s a firewall that can’t be tampered with, as long as it’s in place.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;How is this different from other firewalls?
+    &lt;ul&gt;
+      &lt;li&gt;I’d guess it doesn’t work in any very different / novel way than other firewalls. Answer above covers this&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;What do firewalls do, more specifically?
+    &lt;ul&gt;
+      &lt;li&gt;filter packets based on rules around packet headers (I think IP and TCP headers mostly). They can do this in the kernel (iptables?), in userspace, or before the kernel and after the NIC, like XDP. Firewalls can also have systems for dynamically establishing rules based on pattern. This might be part of why we need all of our traffic to go through a VPN. Because the VPN can have the infrastructure to do dynamic firewall rules (it might require lots / fast machines to find the patterns in the packets to block). But you could also have local firewall rules, and just outsource the feature that finds malicious packet patterns and creates rules, then send those rules back to the firewall. But because that requires a network connection, you could be DDoSed or something and not be able to receive the updated rules&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Do most home networks have firewalls?
+    &lt;ul&gt;
+      &lt;li&gt;I don’t know, but probably? It seems like at least basic rules would exist on a router and probably even baked in to most OSes&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;How do firewalls interact with a VPN?
+    &lt;ul&gt;
+      &lt;li&gt;A packet through a VPN probably has certain characteristics. If the firewall doesn’t like that, then it’ll drop&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Why do we need a VPN for security?
+    &lt;ul&gt;
+      &lt;li&gt;Answered above. Maybe they have their own firewall that traffic hits before it goes to us. This way you can more so guarantee that traffic in and out of the office goes through at minimum the VPN firewall&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="work" /><category term="networking" /><summary type="html">Background I just started a new job! We mostly work with MANET networks. These are wireless networks with non-stationary and unreliable nodes. There are generally no dedicated routers, and all devices are both clients and participate in routing.</summary></entry><entry><title type="html">Getting money from the stock market</title><link href="http://localhost:4000/money" rel="alternate" type="text/html" title="Getting money from the stock market" /><published>2021-09-09T23:31:40-07:00</published><updated>2021-09-09T23:31:40-07:00</updated><id>http://localhost:4000/getting-money-from-the-stock-market</id><content type="html" xml:base="http://localhost:4000/money">&lt;p&gt;I recently started a contract to build a high-frequency trading bot. I’ll use this to document the experience, engineering workflow, daily work, exciting breakthroughs, difficult problems, etc.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;images/tradingBotArchitecture.jpeg&quot; alt=&quot;proposed architecture&quot; /&gt;&lt;/p&gt;
 
@@ -69,7 +294,7 @@
   &lt;li&gt;make a smarter buy / sell / hold decision from OBV info&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;project-is-on-hold&quot;&gt;Project is on hold&lt;/h3&gt;</content><author><name></name></author><category term="scala" /><category term="zio" /><category term="HFT" /><summary type="html">I recently started a contract to build a high-frequency trading bot. I’ll use this to document the experience, engineering workflow, daily work, exciting breakthroughs, difficult problems, etc.</summary></entry><entry><title type="html">Reimplementing ‘git clone’ with Scala / ZIO</title><link href="http://localhost:4000/reimplementing-git-clone-with-scala-zio" rel="alternate" type="text/html" title="Reimplementing ‘git clone’ with Scala / ZIO" /><published>2021-08-29T02:43:15-05:00</published><updated>2021-08-29T02:43:15-05:00</updated><id>http://localhost:4000/reimplementing-git-clone-with-scala-zio</id><content type="html" xml:base="http://localhost:4000/reimplementing-git-clone-with-scala-zio">&lt;p&gt;I’m reimplementing git clone in Scala based of &lt;a href=&quot;https://stefan.saasen.me/articles/git-clone-in-haskell-from-the-bottom-up&quot;&gt;this reimplementation in Haskell&lt;/a&gt;. My goals in order are:&lt;/p&gt;
+&lt;h3 id=&quot;project-is-on-hold&quot;&gt;Project is on hold&lt;/h3&gt;</content><author><name></name></author><category term="scala" /><category term="zio" /><category term="HFT" /><summary type="html">I recently started a contract to build a high-frequency trading bot. I’ll use this to document the experience, engineering workflow, daily work, exciting breakthroughs, difficult problems, etc.</summary></entry><entry><title type="html">Reimplementing ‘git clone’ with Scala / ZIO</title><link href="http://localhost:4000/reimplementing-git-clone-with-scala-zio" rel="alternate" type="text/html" title="Reimplementing ‘git clone’ with Scala / ZIO" /><published>2021-08-29T00:43:15-07:00</published><updated>2021-08-29T00:43:15-07:00</updated><id>http://localhost:4000/reimplementing-git-clone-with-scala-zio</id><content type="html" xml:base="http://localhost:4000/reimplementing-git-clone-with-scala-zio">&lt;p&gt;I’m reimplementing git clone in Scala based of &lt;a href=&quot;https://stefan.saasen.me/articles/git-clone-in-haskell-from-the-bottom-up&quot;&gt;this reimplementation in Haskell&lt;/a&gt;. My goals in order are:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Get more comfortable in Scala and ZIO, particularly in functional-styled Scala&lt;/li&gt;
@@ -141,7 +366,7 @@ I pivoted away from ZIO for two other reasons:&lt;/li&gt;
   &lt;li&gt;To get the example running, I had to alter it and it differed from both the documented example and the source code&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The Akka actor model seems like the canonical way in Scala to send and recieve TCP messages, but also complicated and overkill. While I want to gain more familiarity with the actor abstraction, how to use it, and understand what problems it solves, I want to move quicker through building this app. For now, I’m just going to use &lt;a href=&quot;https://www.py4u.net/discuss/21492&quot;&gt;Java sockets from this example&lt;/a&gt; to build from.&lt;/p&gt;</content><author><name></name></author><category term="ZIO" /><summary type="html">I’m reimplementing git clone in Scala based of this reimplementation in Haskell. My goals in order are:</summary></entry><entry><title type="html">Tetris with Cats -&amp;gt; Snake with ZIO</title><link href="http://localhost:4000/ZIO-snake" rel="alternate" type="text/html" title="Tetris with Cats -&amp;gt; Snake with ZIO" /><published>2021-07-22T09:53:29-05:00</published><updated>2021-07-22T09:53:29-05:00</updated><id>http://localhost:4000/tetris-with-cats-to-snake-with-ZIO</id><content type="html" xml:base="http://localhost:4000/ZIO-snake">&lt;p&gt;&lt;img src=&quot;images/snake.gif&quot; alt=&quot;snake example gif&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;The Akka actor model seems like the canonical way in Scala to send and recieve TCP messages, but also complicated and overkill. While I want to gain more familiarity with the actor abstraction, how to use it, and understand what problems it solves, I want to move quicker through building this app. For now, I’m just going to use &lt;a href=&quot;https://www.py4u.net/discuss/21492&quot;&gt;Java sockets from this example&lt;/a&gt; to build from.&lt;/p&gt;</content><author><name></name></author><category term="ZIO" /><summary type="html">I’m reimplementing git clone in Scala based of this reimplementation in Haskell. My goals in order are:</summary></entry><entry><title type="html">Tetris with Cats -&amp;gt; Snake with ZIO</title><link href="http://localhost:4000/ZIO-snake" rel="alternate" type="text/html" title="Tetris with Cats -&amp;gt; Snake with ZIO" /><published>2021-07-22T07:53:29-07:00</published><updated>2021-07-22T07:53:29-07:00</updated><id>http://localhost:4000/tetris-with-cats-to-snake-with-ZIO</id><content type="html" xml:base="http://localhost:4000/ZIO-snake">&lt;p&gt;&lt;img src=&quot;images/snake.gif&quot; alt=&quot;snake example gif&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;(&lt;a href=&quot;https://github.com/aryzach/snake-console-game-scala-ZIO&quot;&gt;git repo&lt;/a&gt;)
 (&lt;a href=&quot;https://github.com/lpld/simple-games&quot;&gt;original project that this is modified from&lt;/a&gt;)&lt;/p&gt;
@@ -233,7 +458,7 @@ I pivoted away from ZIO for two other reasons:&lt;/li&gt;
 
 &lt;p&gt;I’m not sure if this is more or less efficient than doing an IO random call only when needed (when the snake ate food). I don’t know enough about how streams work. If any stream that can be precomputed precomputes with a lot of values, it might be more efficient than doing ‘random IO’ only when needed. Regardless, it probably doesn’t matter at all for this app, and it’s prematurely optimizing. But it’s fun to think about!&lt;/p&gt;
 
-&lt;p&gt;Now the game is largely feature complete. It’s not a full snake game, because it never ends and you never lose, but it’s all ported to ZIO, which was my main learning goal.&lt;/p&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Journey to ZIO</title><link href="http://localhost:4000/journey-to-zio" rel="alternate" type="text/html" title="Journey to ZIO" /><published>2021-07-08T10:35:05-05:00</published><updated>2021-07-08T10:35:05-05:00</updated><id>http://localhost:4000/journey-to-zio</id><content type="html" xml:base="http://localhost:4000/journey-to-zio">&lt;p&gt;I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m learning Scala and ZIO. Maybe it can be useful for somebody else wanting to learn.&lt;/p&gt;
+&lt;p&gt;Now the game is largely feature complete. It’s not a full snake game, because it never ends and you never lose, but it’s all ported to ZIO, which was my main learning goal.&lt;/p&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Journey to ZIO</title><link href="http://localhost:4000/journey-to-zio" rel="alternate" type="text/html" title="Journey to ZIO" /><published>2021-07-08T08:35:05-07:00</published><updated>2021-07-08T08:35:05-07:00</updated><id>http://localhost:4000/journey-to-zio</id><content type="html" xml:base="http://localhost:4000/journey-to-zio">&lt;p&gt;I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m learning Scala and ZIO. Maybe it can be useful for somebody else wanting to learn.&lt;/p&gt;
 
 &lt;h4 id=&quot;prior-experience--understanding&quot;&gt;Prior experience / understanding:&lt;/h4&gt;
 &lt;ul&gt;
@@ -269,7 +494,7 @@ I pivoted away from ZIO for two other reasons:&lt;/li&gt;
   &lt;li&gt;General scala: &lt;a href=&quot;https://alvinalexander.com/&quot;&gt;Alvin Alexander&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;ZIO seems more like an ecosystem than a tooling library, similar to React (middle ground between a framework and a library). I could be totally off base here!&lt;/p&gt;</content><author><name></name></author><summary type="html">I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m learning Scala and ZIO. Maybe it can be useful for somebody else wanting to learn.</summary></entry><entry><title type="html">Smart Irrigation</title><link href="http://localhost:4000/smart-irrigation" rel="alternate" type="text/html" title="Smart Irrigation" /><published>2021-04-16T13:47:25-05:00</published><updated>2021-04-16T13:47:25-05:00</updated><id>http://localhost:4000/smart-irrigation</id><content type="html" xml:base="http://localhost:4000/smart-irrigation">&lt;p&gt;&lt;img src=&quot;images/valveModuleEnclosure.jpg&quot; alt=&quot;Valve module without valve&quot; style=&quot;transform:rotate(90deg); margin-bottom: -50px; margin-top: -50px;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;ZIO seems more like an ecosystem than a tooling library, similar to React (middle ground between a framework and a library). I could be totally off base here!&lt;/p&gt;</content><author><name></name></author><summary type="html">I have a job lined up working in Scala and will make heavy use of ZIO. This is a brief and working post about how I’m learning Scala and ZIO. Maybe it can be useful for somebody else wanting to learn.</summary></entry><entry><title type="html">Smart Irrigation</title><link href="http://localhost:4000/smart-irrigation" rel="alternate" type="text/html" title="Smart Irrigation" /><published>2021-04-16T11:47:25-07:00</published><updated>2021-04-16T11:47:25-07:00</updated><id>http://localhost:4000/smart-irrigation</id><content type="html" xml:base="http://localhost:4000/smart-irrigation">&lt;p&gt;&lt;img src=&quot;images/valveModuleEnclosure.jpg&quot; alt=&quot;Valve module without valve&quot; style=&quot;transform:rotate(90deg); margin-bottom: -50px; margin-top: -50px;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;problem&quot;&gt;Problem&lt;/h3&gt;
 &lt;p&gt;The problem that we are facing is regularly irrigating roughly 40 - 100 acres with as little water, labor, and power possible. Currently, we have about 20 overhead sprinkler valves and 50 drip irrigation valves. It’s a roughly 5 - 15 minute round trip to change each sprinkler valve, which both takes time and interrupt other projects you may be working on. This translates to roughly four labor hours to irrigate 40 acres, and will take even more time when the rest of the property needs to be irrigated. The 50 drip irrigation valves are less of an issue right now because the valves are in a more central location.&lt;/p&gt;
@@ -507,7 +732,7 @@ python3 OTAserver.py &amp;amp;
 &lt;hr /&gt;
 &lt;h4 id=&quot;overall&quot;&gt;Overall&lt;/h4&gt;
 &lt;p&gt;The ideal hardware setup would be an SPDT relay on built-in Sonoff SV controlling a 3-wire ball valve, powered by a 5-10 watt solar panel and 3-4 lithium batteries or an appropriately-sized supercapacitor.
-The ideal software architeture would be native phone apps and a web app, with a data dashboard to view sensor data.&lt;/p&gt;</content><author><name></name></author><category term="hard" /><category term="tech" /><category term="product" /><category term="design" /><summary type="html"></summary></entry><entry><title type="html">Solar Powered Ranger</title><link href="http://localhost:4000/solar-powered-ranger" rel="alternate" type="text/html" title="Solar Powered Ranger" /><published>2021-04-16T13:47:25-05:00</published><updated>2021-04-16T13:47:25-05:00</updated><id>http://localhost:4000/solar-powered-ranger</id><content type="html" xml:base="http://localhost:4000/solar-powered-ranger">&lt;p&gt;&lt;img src=&quot;images/ranger.jpg&quot; alt=&quot;ranger&quot; /&gt;&lt;/p&gt;
+The ideal software architeture would be native phone apps and a web app, with a data dashboard to view sensor data.&lt;/p&gt;</content><author><name></name></author><category term="hard" /><category term="tech" /><category term="product" /><category term="design" /><summary type="html"></summary></entry><entry><title type="html">Solar Powered Ranger</title><link href="http://localhost:4000/solar-powered-ranger" rel="alternate" type="text/html" title="Solar Powered Ranger" /><published>2021-04-16T11:47:25-07:00</published><updated>2021-04-16T11:47:25-07:00</updated><id>http://localhost:4000/solar-powered-ranger</id><content type="html" xml:base="http://localhost:4000/solar-powered-ranger">&lt;p&gt;&lt;img src=&quot;images/ranger.jpg&quot; alt=&quot;ranger&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;I wanted to passively charge a &lt;a href=&quot;https://ranger.polaris.com/en-us/ranger-ev/&quot;&gt;Polaris Ranger EV&lt;/a&gt; from solar panels. Two 100 watt solar panels had been installed on top of the ranger. The ranger originally had lead-acid batteries. Running and charging lead-acid from solar is simple with a solar controller, but the ranger had already been converted to run off of a lithium battery, which meant it had a battery management system (BMS). Powering the BMS was the crux of this problem.&lt;/p&gt;
 
@@ -581,7 +806,7 @@ BMS DC converter needs to be isolated because the auxiliary ground is different 
   &lt;li&gt;Instead of hysteresis, could’ve used a timer circuit. This could reduce BMS power cycling when driving through shade, but when it’s still sunny elsewhere&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The BMS is the &lt;a href=&quot;https://www.orionbms.com/manuals/pdf/wiring_jr.pdf&quot;&gt;Orion BMS Jr.&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"></summary></entry><entry><title type="html">Class and Book Reviews</title><link href="http://localhost:4000/class-and-book-reviews" rel="alternate" type="text/html" title="Class and Book Reviews" /><published>2020-03-16T12:47:25-06:00</published><updated>2020-03-16T12:47:25-06:00</updated><id>http://localhost:4000/class-and-book-reviews</id><content type="html" xml:base="http://localhost:4000/class-and-book-reviews">&lt;p&gt;This is a chronological listing and description of all resources I’ve used to learn STEM related things. Most of them are computer science and math resources. The resources include college classes, online MOOC-like classes, and books. It’s noted if I audited the class. None of the online courses were for credit, so you could say I audited those, too. I do all the exercises and projects included in the class or book listed, expect for some exceptions where noted. Most of the online classes I take come from an online computer science curriculum that tries to mimic a university CS degree equivalent. The classes are all free and largely project-based. I’ve really enjoyed the curriculum so far and highly recommend most of it. Here’s the link: &lt;a href=&quot;https://github.com/ossu/computer-science&quot;&gt;OSSU (Open Source Society University&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The BMS is the &lt;a href=&quot;https://www.orionbms.com/manuals/pdf/wiring_jr.pdf&quot;&gt;Orion BMS Jr.&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"></summary></entry><entry><title type="html">Class and Book Reviews</title><link href="http://localhost:4000/class-and-book-reviews" rel="alternate" type="text/html" title="Class and Book Reviews" /><published>2020-03-16T11:47:25-07:00</published><updated>2020-03-16T11:47:25-07:00</updated><id>http://localhost:4000/class-and-book-reviews</id><content type="html" xml:base="http://localhost:4000/class-and-book-reviews">&lt;p&gt;This is a chronological listing and description of all resources I’ve used to learn STEM related things. Most of them are computer science and math resources. The resources include college classes, online MOOC-like classes, and books. It’s noted if I audited the class. None of the online courses were for credit, so you could say I audited those, too. I do all the exercises and projects included in the class or book listed, expect for some exceptions where noted. Most of the online classes I take come from an online computer science curriculum that tries to mimic a university CS degree equivalent. The classes are all free and largely project-based. I’ve really enjoyed the curriculum so far and highly recommend most of it. Here’s the link: &lt;a href=&quot;https://github.com/ossu/computer-science&quot;&gt;OSSU (Open Source Society University&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;computer-science&quot;&gt;Computer Science&lt;/h3&gt;
 &lt;ul&gt;
