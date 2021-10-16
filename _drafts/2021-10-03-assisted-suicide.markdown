@@ -53,3 +53,7 @@ Creating a clear roadmap for people, and helping them / reminding them along the
 3. Check ins 
 4. Evaluation (patient / client can refute results at anytime and void or delay plan)
 5. DAS and family support
+
+The wiki is good. Section on US polls. Wording of DAS / DAD really matters here. 'Terminally ill' vs 'severe pain', 'patient suicide' vs 'physician-administered voluntary euthanasia'
+
+Wiki seems to focus on terminally ill, but mentally sound patients. I want to focus on dementia and getting the right paperwork in order before dementia. Very different from what wiki is covering
