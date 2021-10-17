@@ -162,4 +162,16 @@ I'm part way through, and I already feel like I've learned a ton, especially in 
 - Why do we need a VPN for security?
 	* Answered above. Maybe they have their own firewall that traffic hits before it goes to us. This way you can more so guarantee that traffic in and out of the office goes through at minimum the VPN firewall
 
-If I have to debug firewall (and VPN) stuff, I think my main task will be to understand how people use tcpdump and other cli tools to understand why packets are being dropped by iptables (or maybe more specific physical firewall stuff like XDP, too).
+- If I have to debug firewall (and VPN) stuff, I think my main task will be to understand how people use tcpdump and other cli tools to understand why packets are being dropped by iptables (or maybe more specific physical firewall stuff like XDP, too).
+
+### [How I use Wireshark](https://jvns.ca/blog/2018/06/19/what-i-use-wireshark-for/)
+- workflow ex. use tcpdump and save output in a file. Open wireshark
+with that file
+- see what happened in a single TCP connection
+- "cast" a packet to a certain protocol / type of traffic
+- look at headers in english or as raw bytes
+- search for things like `tcp.port == 443`
+- uses stats to find a tcp session that was super long
+- helps make networking concepts concrete because you can physically see
+it happening
+

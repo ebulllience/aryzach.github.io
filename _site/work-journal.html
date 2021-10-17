@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Work Journal</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <nav class="home">
+  <a href="/" >
+    Home
+  </a>
+  <a href="/about.html" >
+    About
+  </a>
+  <a href="/Resume.pdf" class="external" target="_blank">
+    Resume <i class="fa fa-external-link" style="font-size:12px"></i>
+  </a>
+  <a href="https://github.com/aryzach" rel="noreferrer noopener" target="_blank">
+    Github <i class="fa fa-external-link" style="font-size:12px"></i>
+  </a>
+</nav>
+
+    <h1 class=postTitle>Work Journal</h1>
+<p>14 Oct 2021 </p>
+
+<h3 id="101321">10/13/21</h3>
+<p>I deleted our git server!
+We do some kinda secret stuff and have to meet some security standars. We can’t have an unsanctioned cloud git server (haven’t had permission to do it yet), so we had a local one. I was setting up a wiki to keep better docs and totally deleted /var/lib instead of /var/lib/mediawiki. Not my best day. Note to self: be more careful with sys admin / dev ops. It’s a different mindset than programming. Move slower</p>
+
+<h3 id="101421">10/14/21</h3>
+<p>I fixed our git server! So I really did delete everything. Luckily, we had all the repos on different peoples computers. I learned a lot today, mostly from debugging problems when setting up git and it wasn’t working like the docs said it would. <code class="language-plaintext highlighter-rouge">journalctl -xe</code> ! <code class="language-plaintext highlighter-rouge">systemctl status &lt;program_name&gt;</code> ! <code class="language-plaintext highlighter-rouge">ss -tupln</code> ! I also learned a little about nginx and kinda had it working how I wanted it. I’ve never really worked with logs before, but today, they were incredibly useful. I felt like a wizard. I’m not sure if I would’ve had the confidence to do this if I hadn’t done the <a href="aryzach.github.io/quicklearn-networking">jvns.com networking exercise</a> that I did last weekend.</p>
+
+<h3 id="101521">10/15/21</h3>
+<p>I started to take on the task of making us security compliant (CMMC L3). I’m learning a bit about security and will probably learn a lot more about sys admin which is useful. Today I read through all the requirements and read about how other people have fulfilled compliance for each requirement. It’s mostly large companies that have to be compliant, so we’re in a somewhat new / underserved area. Windows has more or less off-the-shelf solutions for this, but we use non-Red Hat linux, so we have to figure out solutions ourselves.</p>
+
+
+
+
+  </body>
+</html>
+<script>
+
+		// to remove space around images (bc they were wrapped with a <p> tag which adds padding/margin
+		const allPTags = document.querySelectorAll("p");
+
+		allPTags.forEach((elem) => {
+				console.log(elem.childNodes[0].tagName);
+				console.log(elem.parentNode);
+
+				if (elem.childNodes.length === 1 && elem.childNodes[0].tagName === "IMG") {
+						elem.parentNode.insertBefore(elem.childNodes[0], elem);
+						elem.remove();
+				}
+		});
+</script>
+
+

@@ -249,9 +249,22 @@
       <li>Answered above. Maybe they have their own firewall that traffic hits before it goes to us. This way you can more so guarantee that traffic in and out of the office goes through at minimum the VPN firewall</li>
     </ul>
   </li>
+  <li>If I have to debug firewall (and VPN) stuff, I think my main task will be to understand how people use tcpdump and other cli tools to understand why packets are being dropped by iptables (or maybe more specific physical firewall stuff like XDP, too).</li>
 </ul>
 
-<p>If I have to debug firewall (and VPN) stuff, I think my main task will be to understand how people use tcpdump and other cli tools to understand why packets are being dropped by iptables (or maybe more specific physical firewall stuff like XDP, too).</p>
+<h3 id="how-i-use-wireshark"><a href="https://jvns.ca/blog/2018/06/19/what-i-use-wireshark-for/">How I use Wireshark</a></h3>
+<ul>
+  <li>workflow ex. use tcpdump and save output in a file. Open wireshark
+with that file</li>
+  <li>see what happened in a single TCP connection</li>
+  <li>“cast” a packet to a certain protocol / type of traffic</li>
+  <li>look at headers in english or as raw bytes</li>
+  <li>search for things like <code class="language-plaintext highlighter-rouge">tcp.port == 443</code></li>
+  <li>uses stats to find a tcp session that was super long</li>
+  <li>helps make networking concepts concrete because you can physically see
+it happening</li>
+</ul>
+
 
 
 
